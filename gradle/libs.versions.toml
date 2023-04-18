@@ -11,6 +11,7 @@ espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.8.0"
 constraintlayout = "2.1.4"
+play-services-location = "21.0.1"
 serialization = "1.8.10"
 swiperefreshlayout = "1.1.0"
 
@@ -26,6 +27,7 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "play-services-location" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "com-android-application" }

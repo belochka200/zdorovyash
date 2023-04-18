@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.cardview)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
