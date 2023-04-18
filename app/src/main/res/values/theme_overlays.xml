@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ThemeOverlay.Sport.Toolbar" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="colorSurface">?attr/colorSurfaceVariant</item>
+    </style>
+</resources>
