@@ -1,6 +1,6 @@
 
 
-<h1 align="center"> Wallet </h1> <br>
+<h1 align="center"> Здоровяш </h1> <br>
 <p align="center">
   <a href="https://82.147.69.30/ ">
     <img alt="Wallet" title="Wallet" src="https://i.imgur.com/HpEedHi.png" width="450">
