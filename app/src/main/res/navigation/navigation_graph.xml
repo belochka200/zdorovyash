@@ -9,5 +9,23 @@
         tools:layout="@layout/fragment__home"
         android:id="@+id/homeScreen"
         android:name="com.example.sport.ui.screens.Home"
-        android:label="Home" />
+        android:label="Home" >
+        <action
+            android:id="@+id/action_homeScreen_to_settings"
+            app:destination="@id/settings" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment__settings"
+        android:id="@+id/settings"
+        android:name="com.example.sport.ui.screens.Settings"
+        android:label="Settings" />
+    <fragment
+        tools:layout="@layout/fragment__welcome"
+        android:id="@+id/welcome"
+        android:name="com.example.sport.ui.screens.Welcome"
+        android:label="Welcome" >
+        <action
+            android:id="@+id/action_welcome_to_homeScreen"
+            app:destination="@id/homeScreen" />
+    </fragment>
 </navigation>

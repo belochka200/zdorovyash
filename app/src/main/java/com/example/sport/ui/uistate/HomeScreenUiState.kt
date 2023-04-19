@@ -4,7 +4,7 @@ sealed class HomeScreenUiState {
     object Loading : HomeScreenUiState()
     object Error : HomeScreenUiState()
     data class Content(
-        val temperature: Int,
-        val precipitation: String,
+        val temperature: Int? = null,
+        val precipitation: String? = null,
     ) : HomeScreenUiState()
 }
