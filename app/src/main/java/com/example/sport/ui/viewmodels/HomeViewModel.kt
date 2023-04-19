@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.sport.SportApplication
+import com.example.sport.data.network.SportApiImpl
+import com.example.sport.data.network.StoriesApiImpl
 import com.example.sport.data.network.WeatherApiImpl
 import com.example.sport.domain.usecases.LoadHomeScreenUseCaseImpl
 import com.example.sport.ui.uistate.HomeScreenUiState
@@ -16,30 +18,45 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class HomeViewModel(private val weatherApiImpl: WeatherApiImpl) : ViewModel() {
+class HomeViewModel(
+    private val weatherApiImpl: WeatherApiImpl,
+    private val storiesApiImpl: StoriesApiImpl,
+    private val sportApiImpl: SportApiImpl
+) : ViewModel() {
 
     private val _uiState: MutableStateFlow<HomeScreenUiState> =
         MutableStateFlow(HomeScreenUiState.Loading)
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
+//    val sportCards = sportApiImpl.loadAllSportItems()
 
     fun refreshWeather(location: Location) {
         _uiState.value = HomeScreenUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            val response = LoadHomeScreenUseCaseImpl(weatherApiImpl).loadWeather(location)
-            _uiState.value =
-                HomeScreenUiState.Content(
-                    temperature = response["temp"].toString().toInt(),
-                    precipitation = response["description"].toString(),
-                    weatherIcon = response["icon"].toString(),
-                    city = response["city"].toString()
-                )
+            try {
+                val useCase = LoadHomeScreenUseCaseImpl(weatherApiImpl, storiesApiImpl, sportApiImpl)
+                val weatherResponse = useCase.loadWeather(location)
+                val storiesResponse = useCase.loadStory()
+                val sportItems = useCase.loadSportCards()
+                _uiState.value =
+                    HomeScreenUiState.Content(
+                        temperature = weatherResponse.temp,
+                        precipitation = weatherResponse.description,
+                        weatherIcon = "",
+                        city = weatherResponse.city,
+                        storiesCards = storiesResponse,
+                        sportCards = sportItems,
+                        temperatureMax = weatherResponse.tempMax,
+                        temperatureMin = weatherResponse.tempMin
+                    )
+            } catch (e: Exception) {
+                _uiState.value = HomeScreenUiState.Error
+            }
         }
     }
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-//            val response = LoadHomeScreenUseCaseImpl(weatherApiImpl).loadWeather()
-            _uiState.value = HomeScreenUiState.Content()
+            _uiState.value = HomeScreenUiState.NoLocation
         }
     }
 
@@ -49,7 +66,9 @@ class HomeViewModel(private val weatherApiImpl: WeatherApiImpl) : ViewModel() {
             override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
                 val application = checkNotNull(extras[APPLICATION_KEY])
                 return HomeViewModel(
-                    (application as SportApplication).weatherApiImpl
+                    (application as SportApplication).weatherApiImpl,
+                    application.storiesApiImpl,
+                    application.sportApiImpl
                 ) as T
             }
         }

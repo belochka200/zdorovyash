@@ -4,4 +4,6 @@
     <string name="allow">Разрешить</string>
     <string name="not_allow">Отменить</string>
     <string name="temperature_mask">%d °C</string>
+    <string name="for_you">Для вас</string>
+    <string name="sport_types">Виды спорта</string>
 </resources>

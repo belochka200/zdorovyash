@@ -1,30 +1,46 @@
 package com.example.sport.domain.usecases
 
 import android.location.Location
-import android.util.Log
+import com.example.sport.data.models.SportItem
+import com.example.sport.data.models.Story
+import com.example.sport.data.network.SportApiImpl
+import com.example.sport.data.network.StoriesApiImpl
 import com.example.sport.data.network.WeatherApiImpl
+import com.example.sport.domain.models.Weather
 
 private interface LoadHomeScreenUseCase {
-
-    /**
-     * @return Pair<String, String>, где первое значение - температура, второе - текущие осадки
-     * */
-    suspend fun loadWeather(location: Location): Map<String, Any> // todo: заменить String на класс осадков
+    suspend fun loadWeather(location: Location): Weather // todo: заменить Map на класс осадков
+    suspend fun loadStory(): List<Story>
+    suspend fun loadSportCards(): List<SportItem>
 }
 
-class LoadHomeScreenUseCaseImpl(private val weatherApiImpl: WeatherApiImpl) : LoadHomeScreenUseCase {
-    override suspend fun loadWeather(location: Location): Map<String, Any> {
+class LoadHomeScreenUseCaseImpl(private val weatherApiImpl: WeatherApiImpl, private val storiesApi: StoriesApiImpl, private val sportApiImpl: SportApiImpl) : LoadHomeScreenUseCase {
+    override suspend fun loadWeather(location: Location): Weather {
         val response = weatherApiImpl.getWeather(location)
         val weatherTemperature = response.main.temp.toInt()
         val weatherDescription = response.weather[0].description
         val city = response.name
-        Log.d("weather", response.toString())
+        // fixme другие иконки
         val icon = weatherApiImpl.getWeatherIcon(response.weather[0].icon)
         val answer = mutableMapOf<String, Any>()
-        answer["temp"] = weatherTemperature
-        answer["description"] = weatherDescription
-        answer["icon"] = icon
-        answer["city"] = city
-        return answer
+//        answer["temp"] = weatherTemperature
+//        answer["description"] = weatherDescription
+//        answer["icon"] = icon
+//        answer["city"] = city
+        return Weather(
+            city = response.name,
+            description = response.weather.first().description,
+            temp = response.main.temp.toInt(),
+            tempMax = response.main.temp_max.toInt(),
+            tempMin = response.main.temp_min.toInt(),
+        )
+    }
+
+    override suspend fun loadStory(): List<Story> {
+        return storiesApi.loadStories()
+    }
+
+    override suspend fun loadSportCards(): List<SportItem> {
+        return sportApiImpl.loadSportItems()
     }
 }

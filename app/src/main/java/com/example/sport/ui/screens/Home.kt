@@ -4,23 +4,25 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.core.view.isVisible
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import coil.load
 import com.example.sport.R
+import com.example.sport.data.models.SportItem
+import com.example.sport.data.models.Story
 import com.example.sport.databinding.FragmentHomeBinding
+import com.example.sport.ui.adapters.SportCardAdapter
+import com.example.sport.ui.adapters.StoryCardAdapter
 import com.example.sport.ui.uistate.HomeScreenUiState
 import com.example.sport.ui.viewmodels.HomeViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -67,16 +69,32 @@ class Home : Fragment(R.layout.fragment__home) {
                                 currentTemperature = uiState.temperature,
                                 currentPrecipitation = uiState.precipitation,
                                 weatherIcon = uiState.weatherIcon,
-                                city = uiState.city
+                                city = uiState.city,
+                                stories = uiState.storiesCards,
+                                sportCards = uiState.sportCards
                             )
                         }
 
+                        HomeScreenUiState.NoLocation -> noLocation()
                         HomeScreenUiState.Error -> {}
                         HomeScreenUiState.Loading -> showLoading()
                     }
                 }
             }
         }
+    }
+
+    private fun noLocation() {
+        hideLoading()
+        if (checkLocationPermission())
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null)
+                    homeViewModel.refreshWeather(location)
+//                else
+                // todo: Найти город
+            }
+        else
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
     }
 
     override fun onCreateView(
@@ -92,32 +110,37 @@ class Home : Fragment(R.layout.fragment__home) {
         super.onViewCreated(view, savedInstanceState)
     }
 
-    private fun showUiContent(currentTemperature: Int?, currentPrecipitation: String?, weatherIcon: String?, city: String?) {
+    private fun showUiContent(
+        currentTemperature: Int,
+        currentPrecipitation: String,
+        weatherIcon: String,
+        city: String,
+        stories: List<Story>,
+        sportCards: List<SportItem>
+    ) {
         hideLoading()
-        if (currentTemperature == null || currentPrecipitation == null)
-            when (checkLocationPermission()) {
-                true -> {
-                    fusedLocationProviderClient.lastLocation.addOnSuccessListener { lastLocation ->
-                        if (lastLocation != null)
-                            homeViewModel.refreshWeather(lastLocation)
-                        else {
-                            Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG).show()
-//                            findNavController().navigate(R.id.action_homeScreen_to_settings)
-                        }
-                    }
-                }
-
-                false -> requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
-            }
         binding.apply {
-            textViewCurrentPrecipitation.text = currentPrecipitation?.firstLetterUppercase() ?: ""
-            textViewCurrentTemperature.text = when {
-                currentTemperature == null -> ""
-                currentTemperature > 0 -> "+${getString(R.string.temperature_mask, currentTemperature)}"
-                else -> getString(R.string.temperature_mask, currentTemperature)
-            }
-            textViewCity.text = city ?: ""
+            textViewCurrentPrecipitation.text = currentPrecipitation.replaceFirstChar { it.uppercase() }
+            textViewCurrentTemperature.text =
+                if (currentTemperature > 0)
+                    "+${getString(R.string.temperature_mask, currentTemperature)}"
+                else
+                    getString(R.string.temperature_mask, currentTemperature)
+            textViewCity.text = city
 //            imageWeatherIcon.load()
+            recyclerViewStories.adapter = StoryCardAdapter(stories)
+            recyclerViewSports.adapter = SportCardAdapter(sportCards)
+            nestedScrollView.setOnScrollChangeListener(
+                NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                if (scrollY > textViewCurrentPrecipitation.bottom)
+                    toolbar.title =
+                        if (currentTemperature > 0)
+                            "+${getString(R.string.temperature_mask, currentTemperature)}, $currentPrecipitation"
+                        else
+                            "${getString(R.string.temperature_mask, currentTemperature)}, $currentPrecipitation"
+                else
+                    toolbar.title = getString(R.string.app_name)
+            })
         }
     }
 
@@ -159,14 +182,12 @@ class Home : Fragment(R.layout.fragment__home) {
     private fun showLoading() {
         binding.apply {
             linearProgressIndicator.isVisible = true
-            groupTopBar.isVisible = false
         }
     }
 
     private fun hideLoading() {
         binding.apply {
             linearProgressIndicator.isVisible = false
-            groupTopBar.isVisible = true
         }
     }
 
@@ -174,8 +195,4 @@ class Home : Fragment(R.layout.fragment__home) {
         super.onDestroyView()
         _binding = null
     }
-}
-
-private fun String.firstLetterUppercase(): CharSequence {
-    return this[0].uppercase() + this.substring(1)
 }
