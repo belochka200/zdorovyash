@@ -30,78 +30,117 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_anchorGravity="center"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_marginTop="16dp"
-                android:id="@+id/image__sun"
+                android:src="@drawable/round_wb_sunny_24"
+                android:id="@+id/image__weather_icon"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_marginHorizontal="16dp"
-                android:src="@drawable/round_wb_sunny_24"
+                android:layout_marginTop="16dp"
                 app:layout_constraintBottom_toTopOf="@id/text_view__current_temperature"
                 app:layout_constraintEnd_toStartOf="@id/image__mascot"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintVertical_bias="0"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintVertical_bias="0"
+                app:layout_constraintVertical_chainStyle="packed"
+                tools:src="@drawable/round_wb_sunny_24" />
 
             <TextView
-                android:textAlignment="center"
                 android:id="@+id/text_view__current_temperature"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
                 app:layout_constraintBottom_toTopOf="@id/text_view__current_precipitation"
                 app:layout_constraintEnd_toStartOf="@id/image__mascot"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image__sun"
+                app:layout_constraintTop_toBottomOf="@id/image__weather_icon"
                 app:layout_constraintVertical_chainStyle="packed"
-                tools:text="+ 15 °C" />
+                tools:text="+15 °C" />
 
             <TextView
-                android:textAlignment="center"
                 android:id="@+id/text_view__current_precipitation"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
+                android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/text_view__current_temperature"
+                app:layout_constraintBottom_toTopOf="@id/text_view__city"
+                app:layout_constraintEnd_toStartOf="@+id/image__mascot"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_view__current_temperature"
                 tools:text="Ясно" />
 
-            <ImageView
-                android:id="@+id/image__mascot"
+            <TextView
+                android:id="@+id/text_view__city"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:textAlignment="center"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+                app:layout_constraintBottom_toBottomOf="@id/image__mascot"
+                app:layout_constraintEnd_toStartOf="@id/image__mascot"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view__current_precipitation"
+                app:layout_goneMarginBottom="16dp"
+                tools:text="Нижний Новгород" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/weather_info_group"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:barrierDirection="end"
+                app:constraint_referenced_ids="text_view__current_temperature, text_view__city, text_view__current_precipitation, image__weather_icon" />
+
+            <ImageView
+                android:id="@+id/image__mascot"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/app_name"
                 android:src="@drawable/mascot"
+                app:layout_constraintBottom_toBottomOf="@id/text_view__city"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/text_view__current_temperature"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.card.MaterialCardView
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/weather_info_barrier"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_height="0dp"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="image__mascot, text_view__current_precipitation, text_view__city, text_view__current_temperature" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image__mascot"
+                app:layout_constraintTop_toBottomOf="@id/weather_info_barrier"
                 tools:layout_height="100dp" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

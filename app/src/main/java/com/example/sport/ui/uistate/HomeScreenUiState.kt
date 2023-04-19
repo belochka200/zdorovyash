@@ -6,5 +6,7 @@ sealed class HomeScreenUiState {
     data class Content(
         val temperature: Int? = null,
         val precipitation: String? = null,
+        val weatherIcon: String? = null,
+        val city: String? = null,
     ) : HomeScreenUiState()
 }

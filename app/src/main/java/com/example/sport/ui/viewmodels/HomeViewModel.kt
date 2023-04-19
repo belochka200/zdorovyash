@@ -28,8 +28,10 @@ class HomeViewModel(private val weatherApiImpl: WeatherApiImpl) : ViewModel() {
             val response = LoadHomeScreenUseCaseImpl(weatherApiImpl).loadWeather(location)
             _uiState.value =
                 HomeScreenUiState.Content(
-                    temperature = response.first,
-                    precipitation = response.second
+                    temperature = response["temp"].toString().toInt(),
+                    precipitation = response["description"].toString(),
+                    weatherIcon = response["icon"].toString(),
+                    city = response["city"].toString()
                 )
         }
     }
@@ -37,10 +39,7 @@ class HomeViewModel(private val weatherApiImpl: WeatherApiImpl) : ViewModel() {
     init {
         viewModelScope.launch(Dispatchers.IO) {
 //            val response = LoadHomeScreenUseCaseImpl(weatherApiImpl).loadWeather()
-            _uiState.value = HomeScreenUiState.Content(
-                temperature = null,
-                precipitation = null
-            )
+            _uiState.value = HomeScreenUiState.Content()
         }
     }
 
