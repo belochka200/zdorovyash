@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -71,7 +72,7 @@ class Home : Fragment(R.layout.fragment__home) {
                         }
 
                         HomeScreenUiState.Error -> {}
-                        HomeScreenUiState.Loading -> {}
+                        HomeScreenUiState.Loading -> showLoading()
                     }
                 }
             }
@@ -92,6 +93,7 @@ class Home : Fragment(R.layout.fragment__home) {
     }
 
     private fun showUiContent(currentTemperature: Int?, currentPrecipitation: String?, weatherIcon: String?, city: String?) {
+        hideLoading()
         if (currentTemperature == null || currentPrecipitation == null)
             when (checkLocationPermission()) {
                 true -> {
@@ -152,6 +154,20 @@ class Home : Fragment(R.layout.fragment__home) {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun showLoading() {
+        binding.apply {
+            linearProgressIndicator.isVisible = true
+            groupTopBar.isVisible = false
+        }
+    }
+
+    private fun hideLoading() {
+        binding.apply {
+            linearProgressIndicator.isVisible = false
+            groupTopBar.isVisible = true
+        }
     }
 
     override fun onDestroyView() {

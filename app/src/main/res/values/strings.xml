@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Sport</string>
+    <string name="app_name">Здоровяш</string>
     <string name="location_required">Необходим доступ к вашему местоположению</string>
     <string name="allow">Разрешить</string>
     <string name="not_allow">Отменить</string>

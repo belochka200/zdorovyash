@@ -27,7 +27,7 @@
         <item name="colorOnSurfaceInverse">@color/md_theme_dark_inverseOnSurface</item>
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
         
-        <item name="toolbarStyle">@style/Widget.Sport.Toolbar</item>
+<!--        <item name="toolbarStyle">@style/Widget.Sport.Toolbar</item>-->
     </style>
 
     <style name="Base.Theme.Sport" parent="Base.Theme.Night.V24.Sport" />
