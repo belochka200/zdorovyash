@@ -3,24 +3,19 @@ package com.example.sport.ui.screens
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
-import android.graphics.ImageDecoder
 import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
-import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -42,7 +37,6 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.launch
-import javax.xml.datatype.DatatypeConstants.Field
 
 class Home : Fragment(R.layout.fragment__home) {
 
@@ -88,7 +82,7 @@ class Home : Fragment(R.layout.fragment__home) {
                                 currentPrecipitation = uiState.precipitation,
                                 weatherIcon = uiState.weatherIcon,
                                 city = uiState.city,
-                                stories = uiState.storiesCards,
+//                                stories = uiState.storiesCards,
                                 sportCards = uiState.sportCards
                             )
                         }
@@ -147,11 +141,19 @@ class Home : Fragment(R.layout.fragment__home) {
         currentPrecipitation: String,
         weatherIcon: String,
         city: String,
-        stories: List<Story>,
+//        stories: List<Story>,
         sportCards: List<SportItem>
     ) {
         hideLoading()
         binding.apply {
+            val imageLoader = ImageLoader.Builder(requireContext())
+                .components {
+                    if (SDK_INT >= 28)
+                        add(ImageDecoderDecoder.Factory())
+                    else
+                        add(GifDecoder.Factory())
+                }.build()
+            imageMascot.load(R.drawable.all_football, imageLoader = imageLoader) { crossfade(500) }
             textViewCurrentPrecipitation.text =
                 currentPrecipitation.replaceFirstChar { it.uppercase() }
             textViewCurrentTemperature.text =
@@ -179,14 +181,7 @@ class Home : Fragment(R.layout.fragment__home) {
                 else -> R.drawable._01d
             }
             imageWeatherIcon.load(icon) { crossfade(500) }
-            recyclerViewStories.adapter = StoryCardAdapter(stories)
-            val imageLoader = ImageLoader.Builder(requireContext())
-                .components {
-                    if (SDK_INT >= 28)
-                        add(ImageDecoderDecoder.Factory())
-                    else
-                        add(GifDecoder.Factory())
-                }.build()
+//            recyclerViewStories.adapter = StoryCardAdapter(stories)
             recyclerViewSports.adapter = SportCardAdapter(sportCards, imageLoader) {
                 val bundle = bundleOf("sportId" to it)
                 findNavController().navigate(R.id.action_homeScreen_to_sportDetail, bundle)

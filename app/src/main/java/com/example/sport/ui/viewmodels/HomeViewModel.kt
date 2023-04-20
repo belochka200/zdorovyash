@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.example.sport.SportApplication
 import com.example.sport.data.network.SportApiImpl
-import com.example.sport.data.network.StoriesApiImpl
 import com.example.sport.data.network.WeatherApiImpl
 import com.example.sport.domain.usecases.LoadHomeScreenUseCaseImpl
 import com.example.sport.ui.uistate.HomeScreenUiState
@@ -20,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val weatherApiImpl: WeatherApiImpl,
-    private val storiesApiImpl: StoriesApiImpl,
+//    private val storiesApiImpl: StoriesApiImpl,
     private val sportApiImpl: SportApiImpl
 ) : ViewModel() {
 
@@ -35,9 +34,9 @@ class HomeViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val useCase =
-                    LoadHomeScreenUseCaseImpl(weatherApiImpl, storiesApiImpl, sportApiImpl)
+                    LoadHomeScreenUseCaseImpl(weatherApiImpl, sportApiImpl)
                 val weatherResponse = useCase.loadWeather(location)
-                val storiesResponse = useCase.loadStory()
+//                val storiesResponse = useCase.loadStory()
                 val sportItems = useCase.loadSportCards()
                 _uiState.value =
                     HomeScreenUiState.Content(
@@ -45,7 +44,6 @@ class HomeViewModel(
                         precipitation = weatherResponse.description,
                         weatherIcon = weatherResponse.icon, // fixme иконка загрузки
                         city = weatherResponse.city,
-                        storiesCards = storiesResponse,
                         sportCards = sportItems,
                         temperatureMax = weatherResponse.tempMax,
                         temperatureMin = weatherResponse.tempMin
@@ -70,7 +68,7 @@ class HomeViewModel(
                 val application = checkNotNull(extras[APPLICATION_KEY])
                 return HomeViewModel(
                     (application as SportApplication).weatherApiImpl,
-                    application.storiesApiImpl,
+//                    application.storiesApiImpl,
                     application.sportApiImpl
                 ) as T
             }

@@ -85,7 +85,8 @@ class SportDetail : Fragment(R.layout.fragment__sport_detail) {
             imageMascot.load(image, imageLoader = imageLoader) { crossfade(500) }
             textViewSportTitle.text = title
             chipSportSeason.text = season
-            textViewDescription.text = description
+//            textViewDescription.text = description
+            toolbar.title = title
         }
     }
 

@@ -18,7 +18,7 @@ class WeatherApiImpl : WeatherApi {
         val json = Json { ignoreUnknownKeys = true }
         val response =
             URL("https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=$WEATHER_API_KEY&lang=ru&units=metric").readText()
-        Log.d("Response weather", response)
+        Log.d("Response", response)
         return json.decodeFromString(response)
     }
 }
