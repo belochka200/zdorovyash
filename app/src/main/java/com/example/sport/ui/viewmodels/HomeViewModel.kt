@@ -43,7 +43,7 @@ class HomeViewModel(
                     HomeScreenUiState.Content(
                         temperature = weatherResponse.temp,
                         precipitation = weatherResponse.description,
-                        weatherIcon = "", // fixme иконка загрузки
+                        weatherIcon = weatherResponse.icon, // fixme иконка загрузки
                         city = weatherResponse.city,
                         storiesCards = storiesResponse,
                         sportCards = sportItems,

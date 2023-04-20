@@ -1,6 +1,7 @@
 package com.example.sport.domain.usecases
 
 import android.location.Location
+import android.util.Log
 import com.example.sport.data.models.sport.SportItem
 import com.example.sport.data.models.story.Story
 import com.example.sport.data.network.SportApiImpl
@@ -23,12 +24,14 @@ class LoadHomeScreenUseCaseImpl(
         val response = weatherApiImpl.getWeather(location)
         // fixme другие иконки
 //        val icon = weatherApiImpl.getWeatherIcon(response.weather[0].icon)
+        val icon = "_" + response.weather[0].icon.substring(response.weather[0].icon.length - 3) + ".svg"
         return Weather(
             city = response.name,
             description = response.weather.first().description,
             temp = response.main.temp.toInt(),
             tempMax = response.main.temp_max.toInt(),
             tempMin = response.main.temp_min.toInt(),
+            icon = icon
         )
     }
 

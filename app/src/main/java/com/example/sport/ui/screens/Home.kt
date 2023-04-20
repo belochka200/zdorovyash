@@ -13,6 +13,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
@@ -26,6 +28,7 @@ import androidx.navigation.fragment.findNavController
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
+import coil.load
 import com.example.sport.R
 import com.example.sport.data.models.sport.SportItem
 import com.example.sport.data.models.story.Story
@@ -39,6 +42,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.launch
+import javax.xml.datatype.DatatypeConstants.Field
 
 class Home : Fragment(R.layout.fragment__home) {
 
@@ -157,7 +161,24 @@ class Home : Fragment(R.layout.fragment__home) {
                     getString(R.string.temperature_mask, currentTemperature)
             textViewTempMaxMin.text = getString(R.string.temp_mask_max_min, maxTemp, minTemp)
             textViewCity.text = city
-//            imageWeatherIcon.load()
+            val icon = when (weatherIcon) { // fixme пофиксить отображение только дневных иконок
+                "01d.png" -> R.drawable._01d
+                "01n.png" -> R.drawable._01n
+                "02d.png" -> R.drawable._02d
+                "02n.png" -> R.drawable._02n
+                "09d.png" -> R.drawable._09d
+                "09n.png" -> R.drawable._09n
+                "10d.png" -> R.drawable._10d
+                "10n.png" -> R.drawable._10n
+                "11d.png" -> R.drawable._11d
+                "11n.png" -> R.drawable._11n
+                "13d.png" -> R.drawable._13d
+                "13n.png" -> R.drawable._13n
+                "50d.png" -> R.drawable._50d
+                "50n.png" -> R.drawable._50n
+                else -> R.drawable._01d
+            }
+            imageWeatherIcon.load(icon) { crossfade(500) }
             recyclerViewStories.adapter = StoryCardAdapter(stories)
             val imageLoader = ImageLoader.Builder(requireContext())
                 .components {
