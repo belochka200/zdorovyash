@@ -27,12 +27,15 @@ class HomeViewModel(
     private val _uiState: MutableStateFlow<HomeScreenUiState> =
         MutableStateFlow(HomeScreenUiState.Loading)
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
+    private val _isLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     fun refreshWeather(location: Location) {
         _uiState.value = HomeScreenUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val useCase = LoadHomeScreenUseCaseImpl(weatherApiImpl, storiesApiImpl, sportApiImpl)
+                val useCase =
+                    LoadHomeScreenUseCaseImpl(weatherApiImpl, storiesApiImpl, sportApiImpl)
                 val weatherResponse = useCase.loadWeather(location)
                 val storiesResponse = useCase.loadStory()
                 val sportItems = useCase.loadSportCards()
@@ -47,6 +50,7 @@ class HomeViewModel(
                         temperatureMax = weatherResponse.tempMax,
                         temperatureMin = weatherResponse.tempMin
                     )
+                _isLoading.value = false
             } catch (e: Exception) {
                 _uiState.value = HomeScreenUiState.Error
             }

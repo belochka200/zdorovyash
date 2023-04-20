@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.play.services.location)
     implementation(libs.coil.kt.coil)
+    implementation("androidx.core:core-splashscreen:1.0.1")
     implementation(libs.coil.gif)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)

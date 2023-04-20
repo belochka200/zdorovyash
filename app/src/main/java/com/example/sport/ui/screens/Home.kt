@@ -17,6 +17,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -43,7 +44,7 @@ class Home : Fragment(R.layout.fragment__home) {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = checkNotNull(_binding)
-    private val homeViewModel: HomeViewModel by viewModels { HomeViewModel.Factory }
+    private val homeViewModel: HomeViewModel by activityViewModels { HomeViewModel.Factory }
 
     private val fusedLocationProviderClient: FusedLocationProviderClient by lazy {
         LocationServices.getFusedLocationProviderClient(requireContext())
