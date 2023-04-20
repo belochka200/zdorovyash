@@ -1,9 +1,9 @@
-package com.example.sport.data.models
+package com.example.sport.data.models.weather
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Weather(
+data class WeatherAnswer(
     val base: String,
     val clouds: Clouds,
     val cod: Int,
@@ -15,6 +15,6 @@ data class Weather(
     val sys: Sys,
     val timezone: Int,
     val visibility: Int,
-    val weather: List<WeatherX>,
+    val weather: List<Weather>,
     val wind: Wind
 )

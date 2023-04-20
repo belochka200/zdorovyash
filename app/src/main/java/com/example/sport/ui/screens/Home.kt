@@ -4,12 +4,14 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -19,8 +21,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.sport.R
-import com.example.sport.data.models.SportCardItem
-import com.example.sport.data.models.Story
+import com.example.sport.data.models.sport.SportItem
+import com.example.sport.data.models.story.Story
 import com.example.sport.databinding.FragmentHomeBinding
 import com.example.sport.ui.adapters.SportCardAdapter
 import com.example.sport.ui.adapters.StoryCardAdapter
@@ -145,7 +147,7 @@ class Home : Fragment(R.layout.fragment__home) {
         weatherIcon: String,
         city: String,
         stories: List<Story>,
-        sportCards: List<SportCardItem>
+        sportCards: List<SportItem>
     ) {
         hideLoading()
         binding.apply {
@@ -160,7 +162,11 @@ class Home : Fragment(R.layout.fragment__home) {
             textViewCity.text = city
 //            imageWeatherIcon.load()
             recyclerViewStories.adapter = StoryCardAdapter(stories)
-            recyclerViewSports.adapter = SportCardAdapter(sportCards)
+            Log.d("Response", stories.toString())
+            recyclerViewSports.adapter = SportCardAdapter(sportCards) {
+                val bundle = bundleOf("sportId" to it)
+                findNavController().navigate(R.id.action_homeScreen_to_sportDetail, bundle)
+            }
             nestedScrollView.setOnScrollChangeListener(
                 NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
                     if (scrollY > textViewCurrentPrecipitation.bottom)

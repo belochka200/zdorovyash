@@ -1,4 +1,4 @@
-package com.example.sport.data.models
+package com.example.sport.data.models.weather
 
 import kotlinx.serialization.Serializable
 

@@ -27,7 +27,6 @@ class HomeViewModel(
     private val _uiState: MutableStateFlow<HomeScreenUiState> =
         MutableStateFlow(HomeScreenUiState.Loading)
     val uiState: StateFlow<HomeScreenUiState> = _uiState.asStateFlow()
-//    val sportCards = sportApiImpl.loadAllSportItems()
 
     fun refreshWeather(location: Location) {
         _uiState.value = HomeScreenUiState.Loading
@@ -41,7 +40,7 @@ class HomeViewModel(
                     HomeScreenUiState.Content(
                         temperature = weatherResponse.temp,
                         precipitation = weatherResponse.description,
-                        weatherIcon = "",
+                        weatherIcon = "", // fixme иконка загрузки
                         city = weatherResponse.city,
                         storiesCards = storiesResponse,
                         sportCards = sportItems,

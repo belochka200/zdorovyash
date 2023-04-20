@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.sport.data.models.Story
+import com.example.sport.data.models.story.Story
 import com.example.sport.databinding.ItemStoryBinding
 
 class StoryCardAdapter(private val listSportCards: List<Story>) : RecyclerView.Adapter<StoryCardAdapter.ViewHolder>(){

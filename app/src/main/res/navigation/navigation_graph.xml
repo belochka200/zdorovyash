@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_homeScreen_to_settings"
             app:destination="@id/settings" />
+        <action
+            android:id="@+id/action_homeScreen_to_sportDetail"
+            app:destination="@id/sportDetail" />
     </fragment>
     <fragment
         tools:layout="@layout/fragment__settings"
@@ -27,5 +30,14 @@
         <action
             android:id="@+id/action_welcome_to_homeScreen"
             app:destination="@id/homeScreen" />
+    </fragment>
+    <fragment
+        android:id="@+id/sportDetail"
+        android:name="com.example.sport.ui.screens.SportDetail"
+        android:label="SportDetail" >
+        <argument
+            android:name="sportId"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
 </navigation>
