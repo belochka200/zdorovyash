@@ -26,7 +26,7 @@ class SportCardAdapter(
         holder.itemView.setOnClickListener { onItemClickListener(sportCardList[position].id) }
         holder.binding.apply {
             heading.text = sportCardList[position].title
-            image.load(sportCardList[position].image, imageLoader = imageLoader)
+            image.load(sportCardList[position].image, imageLoader = imageLoader) { crossfade(500) }
         }
     }
 }

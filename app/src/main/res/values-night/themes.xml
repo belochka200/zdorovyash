@@ -1,5 +1,4 @@
 <resources>
-
     <style name="Base.Theme.Night.V24.Sport" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/md_theme_dark_primary</item>
         <item name="colorOnPrimary">@color/md_theme_dark_onPrimary</item>
@@ -29,6 +28,8 @@
         <item name="colorPrimaryInverse">@color/md_theme_dark_inversePrimary</item>
 
         <item name="toolbarStyle">@style/Widget.Sport.Toolbar</item>
+        <item name="android:navigationBarColor">?attr/colorSurfaceVariant</item>
+        <item name="android:statusBarColor">@color/material_dynamic_primary50</item>
     </style>
 
     <style name="Base.Theme.Sport" parent="Base.Theme.Night.V24.Sport" />
