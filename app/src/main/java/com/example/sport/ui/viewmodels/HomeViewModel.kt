@@ -44,7 +44,7 @@ class HomeViewModel(
                         weatherIcon = "",
                         city = weatherResponse.city,
                         storiesCards = storiesResponse,
-                        sportCards = sportItems,
+                        sportCards = emptyList()    ,
                         temperatureMax = weatherResponse.tempMax,
                         temperatureMin = weatherResponse.tempMin
                     )

@@ -17,6 +17,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.sport.R
 import com.example.sport.data.models.SportItem
 import com.example.sport.data.models.Story
@@ -67,6 +68,8 @@ class Home : Fragment(R.layout.fragment__home) {
                         is HomeScreenUiState.Content -> {
                             showUiContent(
                                 currentTemperature = uiState.temperature,
+                                maxTemp = uiState.temperatureMax,
+                                minTemp = uiState.temperatureMin,
                                 currentPrecipitation = uiState.precipitation,
                                 weatherIcon = uiState.weatherIcon,
                                 city = uiState.city,
@@ -108,10 +111,22 @@ class Home : Fragment(R.layout.fragment__home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.menu_item__home_settings -> {
+                    findNavController().navigate(R.id.action_homeScreen_to_settings)
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     private fun showUiContent(
         currentTemperature: Int,
+        maxTemp: Int,
+        minTemp: Int,
         currentPrecipitation: String,
         weatherIcon: String,
         city: String,
@@ -120,27 +135,39 @@ class Home : Fragment(R.layout.fragment__home) {
     ) {
         hideLoading()
         binding.apply {
-            textViewCurrentPrecipitation.text = currentPrecipitation.replaceFirstChar { it.uppercase() }
+            textViewCurrentPrecipitation.text =
+                currentPrecipitation.replaceFirstChar { it.uppercase() }
             textViewCurrentTemperature.text =
                 if (currentTemperature > 0)
                     "+${getString(R.string.temperature_mask, currentTemperature)}"
                 else
                     getString(R.string.temperature_mask, currentTemperature)
+            textViewTempMaxMin.text = getString(R.string.temp_mask_max_min, maxTemp, minTemp)
             textViewCity.text = city
 //            imageWeatherIcon.load()
             recyclerViewStories.adapter = StoryCardAdapter(stories)
             recyclerViewSports.adapter = SportCardAdapter(sportCards)
             nestedScrollView.setOnScrollChangeListener(
                 NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (scrollY > textViewCurrentPrecipitation.bottom)
-                    toolbar.title =
-                        if (currentTemperature > 0)
-                            "+${getString(R.string.temperature_mask, currentTemperature)}, $currentPrecipitation"
-                        else
-                            "${getString(R.string.temperature_mask, currentTemperature)}, $currentPrecipitation"
-                else
-                    toolbar.title = getString(R.string.app_name)
-            })
+                    if (scrollY > textViewCurrentPrecipitation.bottom)
+                        toolbar.title =
+                            if (currentTemperature > 0)
+                                "+${
+                                    getString(
+                                        R.string.temperature_mask,
+                                        currentTemperature
+                                    )
+                                }, $currentPrecipitation"
+                            else
+                                "${
+                                    getString(
+                                        R.string.temperature_mask,
+                                        currentTemperature
+                                    )
+                                }, $currentPrecipitation"
+                    else
+                        toolbar.title = getString(R.string.app_name)
+                })
         }
     }
 

@@ -19,7 +19,7 @@ class SportCardAdapter(private val sportCardList: List<SportItem>) : RecyclerVie
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.binding.apply {
-            heading.text = sportCardList[position].heading
+            heading.text = sportCardList[position].title
             image.load(sportCardList[position].image)
         }
     }

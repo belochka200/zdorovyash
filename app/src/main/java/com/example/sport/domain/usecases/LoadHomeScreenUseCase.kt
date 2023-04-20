@@ -1,6 +1,8 @@
 package com.example.sport.domain.usecases
 
 import android.location.Location
+import com.example.sport.data.models.SportCard
+import com.example.sport.data.models.SportCardItem
 import com.example.sport.data.models.SportItem
 import com.example.sport.data.models.Story
 import com.example.sport.data.network.SportApiImpl
@@ -11,7 +13,7 @@ import com.example.sport.domain.models.Weather
 private interface LoadHomeScreenUseCase {
     suspend fun loadWeather(location: Location): Weather // todo: заменить Map на класс осадков
     suspend fun loadStory(): List<Story>
-    suspend fun loadSportCards(): List<SportItem>
+    suspend fun loadSportCards(): List<SportCard>
 }
 
 class LoadHomeScreenUseCaseImpl(private val weatherApiImpl: WeatherApiImpl, private val storiesApi: StoriesApiImpl, private val sportApiImpl: SportApiImpl) : LoadHomeScreenUseCase {
@@ -21,12 +23,7 @@ class LoadHomeScreenUseCaseImpl(private val weatherApiImpl: WeatherApiImpl, priv
         val weatherDescription = response.weather[0].description
         val city = response.name
         // fixme другие иконки
-        val icon = weatherApiImpl.getWeatherIcon(response.weather[0].icon)
-        val answer = mutableMapOf<String, Any>()
-//        answer["temp"] = weatherTemperature
-//        answer["description"] = weatherDescription
-//        answer["icon"] = icon
-//        answer["city"] = city
+//        val icon = weatherApiImpl.getWeatherIcon(response.weather[0].icon)
         return Weather(
             city = response.name,
             description = response.weather.first().description,
@@ -40,7 +37,7 @@ class LoadHomeScreenUseCaseImpl(private val weatherApiImpl: WeatherApiImpl, priv
         return storiesApi.loadStories()
     }
 
-    override suspend fun loadSportCards(): List<SportItem> {
+    override suspend fun loadSportCards(): List<SportCard> {
         return sportApiImpl.loadSportItems()
     }
 }

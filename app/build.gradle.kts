@@ -50,6 +50,8 @@ dependencies {
     implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.play.services.location)
     implementation(libs.coil.kt.coil)
+    implementation(libs.converter.moshi)
+    implementation(libs.moshi.kotlin)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

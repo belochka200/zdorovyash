@@ -6,4 +6,6 @@
     <string name="temperature_mask">%d °C</string>
     <string name="for_you">Для вас</string>
     <string name="sport_types">Виды спорта</string>
+    <string name="settings">Настройки</string>
+    <string name="temp_mask_max_min">%d °C / %d °C</string>
 </resources>
