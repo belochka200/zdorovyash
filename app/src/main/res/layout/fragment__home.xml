@@ -14,13 +14,6 @@
         android:animateLayoutChanges="true"
         android:background="?attr/colorSurfaceVariant">
 
-        <!--        <com.google.android.material.appbar.CollapsingToolbarLayout-->
-        <!--            android:id="@+id/collapsing_toolbar_layout"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="?attr/collapsingToolbarLayoutLargeSize"-->
-        <!--            app:expandedTitleTextAppearance="@style/TextAppearance.Material3.HeadlineLarge"-->
-        <!--            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">-->
-
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -29,8 +22,6 @@
             app:layout_collapseMode="pin"
             app:menu="@menu/home_menu"
             app:title="@string/app_name" />
-
-        <!--        </com.google.android.material.appbar.CollapsingToolbarLayout>-->
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/linear_progress_indicator"
@@ -41,183 +32,190 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedScrollView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
+            android:layout_height="match_parent">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card__weather_info"
-                style="@style/Widget.Material3.CardView.Elevated"
-                android:layout_width="0dp"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/medium_indent"
-                app:layout_constraintBottom_toBottomOf="@id/image__mascot"
-                app:layout_constraintEnd_toStartOf="@id/image__mascot"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/image__mascot">
+                android:animateLayoutChanges="true">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card__weather_info"
+                    style="@style/Widget.Material3.CardView.Elevated"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginStart="@dimen/medium_indent"
+                    app:layout_constraintBottom_toBottomOf="@id/image__mascot"
+                    app:layout_constraintEnd_toStartOf="@id/image__mascot"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/image__mascot">
 
-                    <ImageView
-                        android:id="@+id/image__weather_icon"
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:layout_marginHorizontal="@dimen/medium_indent"
-                        android:layout_marginTop="@dimen/medium_indent"
-                        android:src="@drawable/round_wb_sunny_24"
-                        tools:src="@drawable/round_wb_sunny_24" />
-
-                    <TextView
-                        android:id="@+id/text_view__current_temperature"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/medium_indent"
-                        android:layout_marginTop="@dimen/medium_indent"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-                        tools:text="+15 °C" />
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/text_view__temp_max_min"
-                        android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                        android:textAlignment="center"
-                        tools:text="+10 °C / -5°C"
-                        android:layout_marginTop="@dimen/small_indent"
-                        android:layout_marginHorizontal="@dimen/medium_indent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        <ImageView
+                            android:id="@+id/image__weather_icon"
+                            android:layout_width="match_parent"
+                            android:layout_height="100dp"
+                            android:layout_marginHorizontal="@dimen/medium_indent"
+                            android:layout_marginTop="@dimen/medium_indent"
+                            android:src="@drawable/round_wb_sunny_24"
+                            tools:src="@drawable/round_wb_sunny_24" />
 
-                    <TextView
-                        android:id="@+id/text_view__current_precipitation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="@dimen/medium_indent"
-                        android:layout_marginTop="@dimen/medium_indent"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-                        tools:text="Ясно" />
+                        <TextView
+                            android:id="@+id/text_view__current_temperature"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/medium_indent"
+                            android:layout_marginTop="@dimen/medium_indent"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                            tools:text="+15 °C" />
 
-                    <TextView
-                        android:id="@+id/text_view__city"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/medium_indent"
-                        android:textAlignment="center"
-                        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-                        tools:text="Нижний Новгород" />
+                        <TextView
+                            android:id="@+id/text_view__temp_max_min"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/medium_indent"
+                            android:layout_marginTop="@dimen/small_indent"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
+                            tools:text="+10 °C / -5°C" />
 
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/text_view__current_precipitation"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="@dimen/medium_indent"
+                            android:layout_marginTop="@dimen/medium_indent"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                            tools:text="Ясно" />
 
-            </com.google.android.material.card.MaterialCardView>
+                        <TextView
+                            android:id="@+id/text_view__city"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/medium_indent"
+                            android:textAlignment="center"
+                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                            tools:text="Нижний Новгород" />
 
-            <ImageView
-                android:id="@+id/image__mascot"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginHorizontal="@dimen/medium_indent"
-                android:layout_marginTop="@dimen/medium_indent"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/mascot"
-                app:layout_constraintBottom_toBottomOf="@id/card__weather_info"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/card__weather_info"
-                app:layout_constraintTop_toTopOf="parent" />
+                    </LinearLayout>
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group__top_bar"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:constraint_referenced_ids="image__mascot, card__weather_info" />
+                </com.google.android.material.card.MaterialCardView>
 
-            <androidx.constraintlayout.widget.Barrier
-                android:id="@+id/weather_info_barrier"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="image__mascot, card__weather_info" />
+                <ImageView
+                    android:id="@+id/image__mascot"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginHorizontal="@dimen/medium_indent"
+                    android:layout_marginTop="@dimen/medium_indent"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/mascot"
+                    app:layout_constraintBottom_toBottomOf="@id/card__weather_info"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/card__weather_info"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            <Button
-                android:id="@+id/button__roll_up"
-                style="@style/Widget.Material3.Button.ElevatedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/medium_indent"
-                android:layout_marginTop="@dimen/large_indent"
-                android:text="Мне повезёт!"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/weather_info_barrier" />
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group__top_bar"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:constraint_referenced_ids="image__mascot, card__weather_info" />
 
-            <TextView
-                android:id="@+id/text_view__stories_for_you"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/medium_indent"
-                android:layout_marginTop="@dimen/large_indent"
-                android:text="@string/for_you"
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/button__roll_up" />
+                <androidx.constraintlayout.widget.Barrier
+                    android:id="@+id/weather_info_barrier"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:barrierDirection="bottom"
+                    app:constraint_referenced_ids="image__mascot, card__weather_info" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view__stories"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/small_indent"
-                android:layout_marginTop="@dimen/medium_indent"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view__stories_for_you"
-                tools:itemCount="10"
-                tools:listitem="@layout/item__story" />
+                <Button
+                    android:id="@+id/button__roll_up"
+                    style="@style/Widget.Material3.Button.ElevatedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/medium_indent"
+                    android:layout_marginTop="@dimen/large_indent"
+                    android:text="Мне повезёт!"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/weather_info_barrier" />
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/group__stories"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:constraint_referenced_ids="recycler_view__stories, text_view__stories_for_you" />
+                <TextView
+                    android:id="@+id/text_view__stories_for_you"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/medium_indent"
+                    android:layout_marginTop="@dimen/large_indent"
+                    android:text="@string/for_you"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/button__roll_up" />
 
-            <TextView
-                android:id="@+id/text_view__sport_types"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/medium_indent"
-                android:layout_marginTop="@dimen/large_indent"
-                android:text="@string/sport_types"
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recycler_view__stories" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view__stories"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/small_indent"
+                    android:layout_marginTop="@dimen/medium_indent"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view__stories_for_you"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/item__story" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view__sports"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/small_indent"
-                android:layout_marginTop="@dimen/medium_indent"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view__sport_types"
-                app:spanCount="2"
-                tools:itemCount="10"
-                tools:listitem="@layout/item__sport_card" />
+                <androidx.constraintlayout.widget.Group
+                    android:id="@+id/group__stories"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:constraint_referenced_ids="recycler_view__stories, text_view__stories_for_you" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:id="@+id/text_view__sport_types"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/medium_indent"
+                    android:layout_marginTop="@dimen/large_indent"
+                    android:text="@string/sport_types"
+                    android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/recycler_view__stories" />
 
-    </androidx.core.widget.NestedScrollView>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_view__sports"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/small_indent"
+                    android:layout_marginTop="@dimen/medium_indent"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view__sport_types"
+                    app:spanCount="2"
+                    tools:itemCount="10"
+                    tools:listitem="@layout/item__sport_card" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

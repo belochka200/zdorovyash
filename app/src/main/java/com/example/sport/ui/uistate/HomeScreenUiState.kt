@@ -1,6 +1,6 @@
 package com.example.sport.ui.uistate
 
-import com.example.sport.data.models.SportItem
+import com.example.sport.data.models.SportCardItem
 import com.example.sport.data.models.Story
 
 sealed class HomeScreenUiState {
@@ -15,6 +15,6 @@ sealed class HomeScreenUiState {
         val weatherIcon: String,
         val city: String,
         val storiesCards: List<Story>,
-        val sportCards: List<SportItem>,
+        val sportCards: List<SportCardItem>,
     ) : HomeScreenUiState()
 }

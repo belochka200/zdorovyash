@@ -19,7 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.sport.R
-import com.example.sport.data.models.SportItem
+import com.example.sport.data.models.SportCardItem
 import com.example.sport.data.models.Story
 import com.example.sport.databinding.FragmentHomeBinding
 import com.example.sport.ui.adapters.SportCardAdapter
@@ -111,14 +111,28 @@ class Home : Fragment(R.layout.fragment__home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.toolbar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.menu_item__home_settings -> {
-                    findNavController().navigate(R.id.action_homeScreen_to_settings)
-                    true
-                }
+        binding.apply {
+            toolbar.setOnMenuItemClickListener { menuItem ->
+                when (menuItem.itemId) {
+                    R.id.menu_item__home_settings -> {
+                        findNavController().navigate(R.id.action_homeScreen_to_settings)
+                        true
+                    }
 
-                else -> false
+                    else -> false
+                }
+            }
+            swipeRefreshLayout.setOnRefreshListener {
+                swipeRefreshLayout.isRefreshing = false
+                if (checkLocationPermission())
+                    fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                        if (location != null)
+                            homeViewModel.refreshWeather(location)
+                        else
+                            Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG).show()
+                    }
+                else
+                    requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
             }
         }
     }
@@ -131,7 +145,7 @@ class Home : Fragment(R.layout.fragment__home) {
         weatherIcon: String,
         city: String,
         stories: List<Story>,
-        sportCards: List<SportItem>
+        sportCards: List<SportCardItem>
     ) {
         hideLoading()
         binding.apply {
@@ -215,6 +229,7 @@ class Home : Fragment(R.layout.fragment__home) {
     private fun hideLoading() {
         binding.apply {
             linearProgressIndicator.isVisible = false
+            swipeRefreshLayout.isRefreshing = false
         }
     }
 

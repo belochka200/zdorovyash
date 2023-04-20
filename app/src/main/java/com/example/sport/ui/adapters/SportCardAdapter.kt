@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.sport.data.models.SportItem
+import com.example.sport.data.models.SportCardItem
 import com.example.sport.databinding.ItemSportCardBinding
 
-class SportCardAdapter(private val sportCardList: List<SportItem>) : RecyclerView.Adapter<SportCardAdapter.ViewHolder>() {
+class SportCardAdapter(private val sportCardList: List<SportCardItem>) : RecyclerView.Adapter<SportCardAdapter.ViewHolder>() {
     inner class ViewHolder(val binding: ItemSportCardBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

@@ -7,5 +7,6 @@ import kotlinx.serialization.Serializable
 data class Story(
     val id: Int,
     val image: String,
+    val description: String,
     val heading: String
 )

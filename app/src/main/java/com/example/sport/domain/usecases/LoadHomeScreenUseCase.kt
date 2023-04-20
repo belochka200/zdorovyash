@@ -1,9 +1,7 @@
 package com.example.sport.domain.usecases
 
 import android.location.Location
-import com.example.sport.data.models.SportCard
 import com.example.sport.data.models.SportCardItem
-import com.example.sport.data.models.SportItem
 import com.example.sport.data.models.Story
 import com.example.sport.data.network.SportApiImpl
 import com.example.sport.data.network.StoriesApiImpl
@@ -13,7 +11,7 @@ import com.example.sport.domain.models.Weather
 private interface LoadHomeScreenUseCase {
     suspend fun loadWeather(location: Location): Weather // todo: заменить Map на класс осадков
     suspend fun loadStory(): List<Story>
-    suspend fun loadSportCards(): List<SportCard>
+    suspend fun loadSportCards(): List<SportCardItem>
 }
 
 class LoadHomeScreenUseCaseImpl(private val weatherApiImpl: WeatherApiImpl, private val storiesApi: StoriesApiImpl, private val sportApiImpl: SportApiImpl) : LoadHomeScreenUseCase {
@@ -37,7 +35,7 @@ class LoadHomeScreenUseCaseImpl(private val weatherApiImpl: WeatherApiImpl, priv
         return storiesApi.loadStories()
     }
 
-    override suspend fun loadSportCards(): List<SportCard> {
+    override suspend fun loadSportCards(): List<SportCardItem> {
         return sportApiImpl.loadSportItems()
     }
 }
