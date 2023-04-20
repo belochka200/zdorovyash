@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.sport.R
 import com.example.sport.databinding.FragmentSettingsBinding
+import com.google.android.material.transition.MaterialSharedAxis
 
 class Settings : Fragment(R.layout.fragment__settings) {
     private var _binding: FragmentSettingsBinding? = null
@@ -15,6 +16,8 @@ class Settings : Fragment(R.layout.fragment__settings) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        returnTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
     }
 
     override fun onCreateView(

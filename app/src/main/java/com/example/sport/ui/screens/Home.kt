@@ -3,6 +3,8 @@ package com.example.sport.ui.screens
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.graphics.ImageDecoder
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -20,6 +22,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import com.example.sport.R
 import com.example.sport.data.models.sport.SportItem
 import com.example.sport.data.models.story.Story
@@ -31,6 +36,7 @@ import com.example.sport.ui.viewmodels.HomeViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.launch
 
 class Home : Fragment(R.layout.fragment__home) {
@@ -63,6 +69,8 @@ class Home : Fragment(R.layout.fragment__home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.uiState.collect { uiState ->
@@ -87,19 +95,6 @@ class Home : Fragment(R.layout.fragment__home) {
                 }
             }
         }
-    }
-
-    private fun noLocation() {
-        hideLoading()
-        if (checkLocationPermission())
-            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
-                if (location != null)
-                    homeViewModel.refreshWeather(location)
-//                else
-                // todo: Найти город
-            }
-        else
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
     }
 
     override fun onCreateView(
@@ -131,7 +126,8 @@ class Home : Fragment(R.layout.fragment__home) {
                         if (location != null)
                             homeViewModel.refreshWeather(location)
                         else
-                            Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG)
+                                .show()
                     }
                 else
                     requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -162,8 +158,14 @@ class Home : Fragment(R.layout.fragment__home) {
             textViewCity.text = city
 //            imageWeatherIcon.load()
             recyclerViewStories.adapter = StoryCardAdapter(stories)
-            Log.d("Response", stories.toString())
-            recyclerViewSports.adapter = SportCardAdapter(sportCards) {
+            val imageLoader = ImageLoader.Builder(requireContext())
+                .components {
+                    if (SDK_INT >= 28)
+                        add(ImageDecoderDecoder.Factory())
+                    else
+                        add(GifDecoder.Factory())
+                }.build()
+            recyclerViewSports.adapter = SportCardAdapter(sportCards, imageLoader) {
                 val bundle = bundleOf("sportId" to it)
                 findNavController().navigate(R.id.action_homeScreen_to_sportDetail, bundle)
             }
@@ -189,6 +191,19 @@ class Home : Fragment(R.layout.fragment__home) {
                         toolbar.title = getString(R.string.app_name)
                 })
         }
+    }
+
+    private fun noLocation() {
+        hideLoading()
+        if (checkLocationPermission())
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null)
+                    homeViewModel.refreshWeather(location)
+//                else
+                // todo: Найти город
+            }
+        else
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
     }
 
     private fun checkLocationPermission(): Boolean {
