@@ -58,7 +58,7 @@
 **Уже доступно на Android!**
 
 <p align="center">
-  <img src = "https://i.imgur.com/Vd9lOYW.png" width=800>
+  <img src = "https://i.imgur.com/Mv8mVHu.png" width=800>
 </p>
 
 ## Особенности
@@ -75,11 +75,11 @@
 * Фильтровать экипировку исходя из вашего спортивного уровня и финансовых возможностей
 * Изучать актуальные спортивные рекомендации
 * Получать рекомендации по покупки интересующего инвентаря
+* Смотреть подходящие площадки и секции для занятия вашим любимым видом спорта
+* Переходить по предложенным рекомендациям на товары и места
 * И многое другое!
 
-<p align="center">
-  <img src = "https://i.imgur.com/YpK0t6K.png" height="">
-</p>
+
 
 
 
@@ -101,7 +101,7 @@
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore -->
-| [<img src="https://avatars.githubusercontent.com/u/90848780?v=4" width="100px;"/><br /><sub><b>Egor Dubina</b></sub>](https://github.com/belochka200)<br /><u>Chief Android Developer/Backend</u> <br />💻🎨  | [<img src="https://avatars.githubusercontent.com/u/70071149?v=4" width="100px;"/><br /><sub><b>Aleksandr Kuvaldin</b></sub>](https://github.com/seldomos)<br /><u>Engineering/Design/Backend</u><br />🎨📖💻 | [<img src="https://avatars.githubusercontent.com/u/81908442?v=4" width="100px;"/><br /><sub><b>Leonid Kopotilov</b></sub>](https://github.com/lkopik)<br /><u>Assistant/Helper</u> <br />📖 | [<img src="https://avatars.githubusercontent.com/u/56026614?v=4" width="100px;"/><br /><sub><b>Sergei Ivashishin</b></sub>](https://github.com/abbat1081)<br /><u>Mentor</u><br /> 👀 |    
+| [<img src="https://avatars.githubusercontent.com/u/90848780?v=4" width="100px;"/><br /><sub><b>Egor Dubina</b></sub>](https://github.com/belochka200)<br /><u>Chief Android Developer/Backend</u> <br />💻📱🎨| [<img src="https://avatars.githubusercontent.com/u/70071149?v=4" width="100px;"/><br /><sub><b>Aleksandr Kuvaldin</b></sub>](https://github.com/seldomos)<br /><u>Engineering/Design/Backend</u><br />🎨📖💻 | [<img src="https://avatars.githubusercontent.com/u/81908442?v=4" width="100px;"/><br /><sub><b>Leonid Kopotilov</b></sub>](https://github.com/lkopik)<br /><u>Assistant/Helper/Tester</u> <br />📖📱| [<img src="https://avatars.githubusercontent.com/u/56026614?v=4" width="100px;"/><br /><sub><b>Sergei Ivashishin</b></sub>](https://github.com/abbat1081)<br /><u>Mentor</u><br /> 👀 |    
 |:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------:|
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
