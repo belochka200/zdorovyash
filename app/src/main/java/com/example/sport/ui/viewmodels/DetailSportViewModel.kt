@@ -25,12 +25,18 @@ class DetailSportViewModel(private val sportApiImpl: SportApiImpl) : ViewModel()
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val response = LoadOneSportItemByIdUseCaseImpl(sportApiImpl).loadOneSportById(id)
+                val locations: List<String> = response.locations.split(";/r/n")[0].split(";").map { it.trim() } // получаем каждый элемент локации
+                val products: List<String> = response.products.split(";/r/n")[0].split(";").map { it.trim() } // получаем кажды элемент продуктов
+                Log.d("Products Locations", locations.toString())
+                Log.d("Products Locations", products.toString())
                 _uiState.value = DetailSportUiState.Content(
                     id = response.id,
                     title = response.title,
                     description = response.description,
                     season = "Сезон: лето", // fixme фикс сезона, получечние с сервера
-                    image = response.image
+                    image = response.image,
+                    location = locations,
+                    products = products
                 )
             } catch (e: Exception) {
                 Log.e("Exception", e.toString())

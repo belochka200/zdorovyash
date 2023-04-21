@@ -93,27 +93,26 @@
                 app:constraint_referenced_ids="image__mascot, text_view__sport_title, chip__sport_season" />
 
             <TextView
-                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-                android:text="Что с собой взять"
                 android:id="@+id/text_view__what_is_use"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/medium_indent"
                 android:layout_marginTop="@dimen/medium_indent"
+                android:text="Что с собой взять"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/barrier__top_bar" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="@dimen/small_indent"
-                android:id="@+id/recycler_view__items"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginHorizontal="@dimen/small_indent"
+            <TextView
+                android:id="@+id/text_view__what_is_use_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginHorizontal="@dimen/medium_indent"
+                android:layout_marginTop="@dimen/small_indent"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_view__what_is_use" />
 
             <TextView
@@ -122,11 +121,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/medium_indent"
                 android:layout_marginTop="@dimen/medium_indent"
-                android:text="Товары"
+                android:text="@string/products"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/recycler_view__items" />
+                app:layout_constraintTop_toBottomOf="@id/text_view__what_is_use_text" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view__products"

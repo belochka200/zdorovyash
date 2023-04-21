@@ -9,5 +9,7 @@ sealed class DetailSportUiState {
         val description: String,
         val season: String,
         val image: String,
+        val location: List<String>,
+        val products: List<String>,
     ) : DetailSportUiState()
 }

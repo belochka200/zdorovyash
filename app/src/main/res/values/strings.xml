@@ -8,4 +8,5 @@
     <string name="sport_types">Виды спорта</string>
     <string name="settings">Настройки</string>
     <string name="temp_mask_max_min">%d °C / %d °C</string>
+    <string name="products">Товары</string>
 </resources>

@@ -1,7 +1,10 @@
 package com.example.sport.ui.screens
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,7 +21,9 @@ import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.example.sport.R
+import com.example.sport.data.models.ProductCard
 import com.example.sport.databinding.FragmentSportDetailBinding
+import com.example.sport.ui.adapters.ProductsSportItemAdapter
 import com.example.sport.ui.uistate.DetailSportUiState
 import com.example.sport.ui.viewmodels.DetailSportViewModel
 import com.google.android.material.transition.MaterialSharedAxis
@@ -41,7 +46,9 @@ class SportDetail : Fragment(R.layout.fragment__sport_detail) {
                                 image = uiState.image,
                                 season = uiState.season,
                                 title = uiState.title,
-                                description = uiState.description
+                                description = uiState.description,
+                                locations = uiState.location,
+                                products = uiState.products
                             )
                         }
 
@@ -72,7 +79,14 @@ class SportDetail : Fragment(R.layout.fragment__sport_detail) {
         }
     }
 
-    private fun showContent(image: String, title: String, season: String, description: String) {
+    private fun showContent(
+        image: String,
+        title: String,
+        season: String,
+        description: String,
+        locations: List<String>,
+        products: List<String>
+    ) {
         hideLoading()
         binding.apply {
             val imageLoader = ImageLoader.Builder(requireContext())
@@ -85,8 +99,42 @@ class SportDetail : Fragment(R.layout.fragment__sport_detail) {
             imageMascot.load(image, imageLoader = imageLoader) { crossfade(500) }
             textViewSportTitle.text = title
             chipSportSeason.text = season
-//            textViewDescription.text = description
             toolbar.title = title
+            textViewWhatIsUse
+            val tempProducts = mutableListOf<ProductCard>()
+            var name: String = ""
+            products.forEachIndexed { index, item ->
+                if (index == 0 || index % 4 == 0)
+                    name = item
+                else
+                    tempProducts.add(
+                        ProductCard(
+                            name,
+                            item.split('|').first().toString(),
+                            item.split('|').last()
+                        )
+                    )
+            }
+            recyclerViewProducts.adapter = ProductsSportItemAdapter(tempProducts) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.link))
+                startActivity(intent)
+            }
+            val tempLocations = mutableListOf<ProductCard>()
+            locations.forEachIndexed { index, item ->
+                Log.d("Locations", item)
+                val tempSplit = item.split("|")
+                tempLocations.add(
+                    ProductCard(
+                        tempSplit.last(),
+                        tempSplit.first().toString(),
+                        null
+                    )
+                )
+            }
+            recyclerViewLocations.adapter = ProductsSportItemAdapter(tempLocations) {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.link))
+                startActivity(intent)
+            }
         }
     }
 
