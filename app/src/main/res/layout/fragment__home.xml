@@ -20,7 +20,6 @@
             android:layout_height="?attr/actionBarSize"
             android:elevation="0dp"
             app:layout_collapseMode="pin"
-            app:menu="@menu/home_menu"
             app:title="@string/app_name" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
@@ -141,49 +140,49 @@
                     app:barrierDirection="bottom"
                     app:constraint_referenced_ids="image__mascot, card__weather_info" />
 
-                <Button
-                    android:id="@+id/button__roll_up"
-                    style="@style/Widget.Material3.Button.ElevatedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/medium_indent"
-                    android:layout_marginTop="@dimen/large_indent"
-                    android:text="Мне повезёт!"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/weather_info_barrier" />
+<!--                <Button-->
+<!--                    android:id="@+id/button__roll_up"-->
+<!--                    style="@style/Widget.Material3.Button.ElevatedButton"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginHorizontal="@dimen/medium_indent"-->
+<!--                    android:layout_marginTop="@dimen/large_indent"-->
+<!--                    android:text="Мне повезёт!"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/weather_info_barrier" />-->
 
-                <TextView
-                    android:id="@+id/text_view__stories_for_you"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/medium_indent"
-                    android:layout_marginTop="@dimen/large_indent"
-                    android:text="@string/for_you"
-                    android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/button__roll_up" />
+<!--                <TextView-->
+<!--                    android:id="@+id/text_view__stories_for_you"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginHorizontal="@dimen/medium_indent"-->
+<!--                    android:layout_marginTop="@dimen/large_indent"-->
+<!--                    android:text="@string/for_you"-->
+<!--                    android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/weather_info_barrier" />-->
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recycler_view__stories"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/small_indent"
-                    android:layout_marginTop="@dimen/medium_indent"
-                    android:orientation="horizontal"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/text_view__stories_for_you"
-                    tools:itemCount="10"
-                    tools:listitem="@layout/item__story" />
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/recycler_view__stories"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginHorizontal="@dimen/small_indent"-->
+<!--                    android:layout_marginTop="@dimen/medium_indent"-->
+<!--                    android:orientation="horizontal"-->
+<!--                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/text_view__stories_for_you"-->
+<!--                    tools:itemCount="10"-->
+<!--                    tools:listitem="@layout/item__story" />-->
 
-                <androidx.constraintlayout.widget.Group
-                    android:id="@+id/group__stories"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:constraint_referenced_ids="recycler_view__stories, text_view__stories_for_you" />
+<!--                <androidx.constraintlayout.widget.Group-->
+<!--                    android:id="@+id/group__stories"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    app:constraint_referenced_ids="recycler_view__stories, text_view__stories_for_you" />-->
 
                 <TextView
                     android:id="@+id/text_view__sport_types"
@@ -195,7 +194,7 @@
                     android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/recycler_view__stories" />
+                    app:layout_constraintTop_toBottomOf="@id/weather_info_barrier" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view__sports"

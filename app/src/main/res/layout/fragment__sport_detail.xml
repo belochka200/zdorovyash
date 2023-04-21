@@ -2,9 +2,9 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="?attr/colorSurfaceVariant"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?attr/colorSurfaceVariant">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -12,9 +12,9 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            app:navigationIcon="@drawable/round_arrow_back_ios_new_24"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/round_arrow_back_ios_new_24" />
 
         <com.google.android.material.progressindicator.LinearProgressIndicator
             android:id="@+id/linear_progress_indicator"
@@ -30,9 +30,9 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:animateLayoutChanges="true"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true">
 
             <ImageView
                 android:id="@+id/image__mascot"
@@ -46,51 +46,133 @@
                 tools:src="@drawable/mascot" />
 
             <TextView
-                tools:text="Футбол"
-                android:layout_marginTop="@dimen/medium_indent"
                 android:id="@+id/text_view__sport_title"
                 android:layout_width="0dp"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/medium_indent"
+                android:layout_marginTop="@dimen/medium_indent"
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
                 app:layout_constraintEnd_toStartOf="@id/image__mascot"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <com.google.android.material.chip.Chip
-                app:layout_constraintHorizontal_bias="0"
-                android:id="@+id/chip__sport_season"
-                style="@style/Widget.Material3.Chip.Suggestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/medium_indent"
-                android:layout_marginTop="@dimen/medium_indent"
-                android:layout_marginEnd="42dp"
-                app:layout_constraintEnd_toStartOf="@+id/image__mascot"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view__sport_title"
-                tools:text="Летний вид спорта" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Футбол" />
+
+<!--            <com.google.android.material.chip.Chip-->
+<!--                android:id="@+id/chip__sport_season"-->
+<!--                style="@style/Widget.Material3.Chip.Suggestion"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/medium_indent"-->
+<!--                android:layout_marginTop="@dimen/medium_indent"-->
+<!--                android:layout_marginEnd="42dp"-->
+<!--                android:clickable="false"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/image__mascot"-->
+<!--                app:layout_constraintHorizontal_bias="0"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/text_view__sport_title"-->
+<!--                tools:text="Летний вид спорта" />-->
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/text_view__description"-->
+            <!--                tools:maxLength="255"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                tools:text="@tools:sample/lorem/random"-->
+            <!--                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"-->
+            <!--                android:layout_marginTop="@dimen/medium_indent"-->
+            <!--                android:layout_marginHorizontal="@dimen/medium_indent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/barrier__top_bar"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content" />-->
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier__top_bar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="image__mascot, text_view__sport_title" />
 
             <TextView
-                android:id="@+id/text_view__description"
-                tools:maxLength="255"
+                android:id="@+id/text_view__what_is_use"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/medium_indent"
+                android:layout_marginTop="@dimen/medium_indent"
+                android:text="Что с собой взять"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier__top_bar" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:id="@+id/recycler_view__what_is_use"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:text="@tools:sample/lorem/random"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                android:layout_marginTop="@dimen/medium_indent"
-                android:layout_marginHorizontal="@dimen/medium_indent"
-                app:layout_constraintTop_toBottomOf="@id/barrier__top_bar"
+                android:layout_marginTop="@dimen/small_indent"
+                android:layout_marginHorizontal="@dimen/small_indent"
+                app:layout_constraintTop_toBottomOf="@id/text_view__what_is_use"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
 
+            <!--            <TextView-->
+            <!--                android:id="@+id/text_view__what_is_use_text"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginHorizontal="@dimen/medium_indent"-->
+            <!--                android:layout_marginTop="@dimen/small_indent"-->
+            <!--                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/text_view__what_is_use" />-->
 
-            <androidx.constraintlayout.widget.Barrier
+            <TextView
+                android:id="@+id/text_view__products"
                 android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:id="@+id/barrier__top_bar"
-                app:barrierDirection="bottom"
-                app:constraint_referenced_ids="image__mascot, text_view__sport_title, chip__sport_season" />
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/medium_indent"
+                android:layout_marginTop="@dimen/medium_indent"
+                android:text="@string/products"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recycler_view__what_is_use" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view__products"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/small_indent"
+                android:layout_marginTop="@dimen/small_indent"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view__products" />
+
+            <TextView
+                android:id="@+id/text_view__locations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/medium_indent"
+                android:layout_marginTop="@dimen/medium_indent"
+                android:text="Где можно позаниматься"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/recycler_view__products" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view__locations"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/small_indent"
+                android:layout_marginTop="@dimen/small_indent"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view__locations" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,8 +3,8 @@ package com.example.sport.ui.screens
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
+import android.os.Build.VERSION.SDK_INT
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,11 +15,15 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
+import coil.load
 import com.example.sport.R
 import com.example.sport.data.models.sport.SportItem
 import com.example.sport.data.models.story.Story
@@ -31,13 +35,14 @@ import com.example.sport.ui.viewmodels.HomeViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.transition.MaterialSharedAxis
 import kotlinx.coroutines.launch
 
 class Home : Fragment(R.layout.fragment__home) {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = checkNotNull(_binding)
-    private val homeViewModel: HomeViewModel by viewModels { HomeViewModel.Factory }
+    private val homeViewModel: HomeViewModel by activityViewModels { HomeViewModel.Factory }
 
     private val fusedLocationProviderClient: FusedLocationProviderClient by lazy {
         LocationServices.getFusedLocationProviderClient(requireContext())
@@ -63,6 +68,8 @@ class Home : Fragment(R.layout.fragment__home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        exitTransition = MaterialSharedAxis(MaterialSharedAxis.X, true)
+        reenterTransition = MaterialSharedAxis(MaterialSharedAxis.X, false)
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.uiState.collect { uiState ->
@@ -75,7 +82,7 @@ class Home : Fragment(R.layout.fragment__home) {
                                 currentPrecipitation = uiState.precipitation,
                                 weatherIcon = uiState.weatherIcon,
                                 city = uiState.city,
-                                stories = uiState.storiesCards,
+//                                stories = uiState.storiesCards,
                                 sportCards = uiState.sportCards
                             )
                         }
@@ -87,19 +94,6 @@ class Home : Fragment(R.layout.fragment__home) {
                 }
             }
         }
-    }
-
-    private fun noLocation() {
-        hideLoading()
-        if (checkLocationPermission())
-            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
-                if (location != null)
-                    homeViewModel.refreshWeather(location)
-//                else
-                // todo: Найти город
-            }
-        else
-            requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
     }
 
     override fun onCreateView(
@@ -131,7 +125,8 @@ class Home : Fragment(R.layout.fragment__home) {
                         if (location != null)
                             homeViewModel.refreshWeather(location)
                         else
-                            Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG)
+                                .show()
                     }
                 else
                     requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -146,11 +141,19 @@ class Home : Fragment(R.layout.fragment__home) {
         currentPrecipitation: String,
         weatherIcon: String,
         city: String,
-        stories: List<Story>,
+//        stories: List<Story>,
         sportCards: List<SportItem>
     ) {
         hideLoading()
         binding.apply {
+            val imageLoader = ImageLoader.Builder(requireContext())
+                .components {
+                    if (SDK_INT >= 28)
+                        add(ImageDecoderDecoder.Factory())
+                    else
+                        add(GifDecoder.Factory())
+                }.build()
+            imageMascot.load(R.drawable.all_football, imageLoader = imageLoader) { crossfade(500) }
             textViewCurrentPrecipitation.text =
                 currentPrecipitation.replaceFirstChar { it.uppercase() }
             textViewCurrentTemperature.text =
@@ -160,10 +163,26 @@ class Home : Fragment(R.layout.fragment__home) {
                     getString(R.string.temperature_mask, currentTemperature)
             textViewTempMaxMin.text = getString(R.string.temp_mask_max_min, maxTemp, minTemp)
             textViewCity.text = city
-//            imageWeatherIcon.load()
-            recyclerViewStories.adapter = StoryCardAdapter(stories)
-            Log.d("Response", stories.toString())
-            recyclerViewSports.adapter = SportCardAdapter(sportCards) {
+            val icon = when (weatherIcon) { // fixme пофиксить отображение только дневных иконок
+                "01d.png" -> R.drawable._01d
+                "01n.png" -> R.drawable._01n
+                "02d.png" -> R.drawable._02d
+                "02n.png" -> R.drawable._02n
+                "09d.png" -> R.drawable._09d
+                "09n.png" -> R.drawable._09n
+                "10d.png" -> R.drawable._10d
+                "10n.png" -> R.drawable._10n
+                "11d.png" -> R.drawable._11d
+                "11n.png" -> R.drawable._11n
+                "13d.png" -> R.drawable._13d
+                "13n.png" -> R.drawable._13n
+                "50d.png" -> R.drawable._50d
+                "50n.png" -> R.drawable._50n
+                else -> R.drawable._01d
+            }
+            imageWeatherIcon.load(icon) { crossfade(500) }
+//            recyclerViewStories.adapter = StoryCardAdapter(stories)
+            recyclerViewSports.adapter = SportCardAdapter(sportCards, imageLoader) {
                 val bundle = bundleOf("sportId" to it)
                 findNavController().navigate(R.id.action_homeScreen_to_sportDetail, bundle)
             }
@@ -189,6 +208,19 @@ class Home : Fragment(R.layout.fragment__home) {
                         toolbar.title = getString(R.string.app_name)
                 })
         }
+    }
+
+    private fun noLocation() {
+        hideLoading()
+        if (checkLocationPermission())
+            fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
+                if (location != null)
+                    homeViewModel.refreshWeather(location)
+//                else
+                // todo: Найти город
+            }
+        else
+            requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
     }
 
     private fun checkLocationPermission(): Boolean {

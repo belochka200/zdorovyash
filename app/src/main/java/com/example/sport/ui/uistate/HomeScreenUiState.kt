@@ -14,7 +14,6 @@ sealed class HomeScreenUiState {
         val precipitation: String,
         val weatherIcon: String,
         val city: String,
-        val storiesCards: List<Story>,
         val sportCards: List<SportItem>,
     ) : HomeScreenUiState()
 }

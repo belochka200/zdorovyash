@@ -6,4 +6,5 @@ data class Weather(
     val temp: Int,
     val tempMin: Int,
     val tempMax: Int,
+    val icon: String,
 )

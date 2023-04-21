@@ -17,7 +17,7 @@ class SportApiImpl : SportApi {
     override suspend fun loadSportItems(): List<SportItem> {
         val json = Json { ignoreUnknownKeys = true }
         val response = URL(BASE_URL_SPORTS).readText()
-        Log.d("Response sport", response)
+        Log.d("Response", response)
         return json.decodeFromString(response)
     }
 

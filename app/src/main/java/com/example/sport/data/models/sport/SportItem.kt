@@ -9,4 +9,6 @@ data class SportItem(
     val description: String,
     val season: Int,
     val image: String,
+    val locations: String,
+    val products: String,
 )
