@@ -24,6 +24,7 @@ import com.example.sport.R
 import com.example.sport.data.models.ProductCard
 import com.example.sport.databinding.FragmentSportDetailBinding
 import com.example.sport.ui.adapters.ProductsSportItemAdapter
+import com.example.sport.ui.adapters.WhatIsUseAdapter
 import com.example.sport.ui.uistate.DetailSportUiState
 import com.example.sport.ui.viewmodels.DetailSportViewModel
 import com.google.android.material.transition.MaterialSharedAxis
@@ -88,6 +89,7 @@ class SportDetail : Fragment(R.layout.fragment__sport_detail) {
         products: List<String>
     ) {
         hideLoading()
+        // fixme исправить весь код
         binding.apply {
             val imageLoader = ImageLoader.Builder(requireContext())
                 .components {
@@ -131,6 +133,15 @@ class SportDetail : Fragment(R.layout.fragment__sport_detail) {
                     )
                 )
             }
+            val tempWhatIsUse = mutableSetOf<String>()
+            tempProducts.forEach {
+                tempWhatIsUse.add(it.title)
+            }
+            val l = mutableListOf<String>()
+            tempWhatIsUse.forEach {
+                l.add(it)
+            }
+            recyclerViewWhatIsUse.adapter = WhatIsUseAdapter(l)
             recyclerViewLocations.adapter = ProductsSportItemAdapter(tempLocations) {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(it.link))
                 startActivity(intent)

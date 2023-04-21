@@ -104,16 +104,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/barrier__top_bar" />
 
-            <TextView
-                android:id="@+id/text_view__what_is_use_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/medium_indent"
-                android:layout_marginTop="@dimen/small_indent"
-                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                app:layout_constraintEnd_toEndOf="parent"
+            <androidx.recyclerview.widget.RecyclerView
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:id="@+id/recycler_view__what_is_use"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view__what_is_use" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/small_indent"
+                android:layout_marginHorizontal="@dimen/small_indent"
+                app:layout_constraintTop_toBottomOf="@id/text_view__what_is_use"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <!--            <TextView-->
+            <!--                android:id="@+id/text_view__what_is_use_text"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginHorizontal="@dimen/medium_indent"-->
+            <!--                android:layout_marginTop="@dimen/small_indent"-->
+            <!--                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/text_view__what_is_use" />-->
 
             <TextView
                 android:id="@+id/text_view__products"
@@ -125,7 +136,7 @@
                 android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view__what_is_use_text" />
+                app:layout_constraintTop_toBottomOf="@id/recycler_view__what_is_use" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view__products"
