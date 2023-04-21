@@ -100,7 +100,7 @@ class SportDetail : Fragment(R.layout.fragment__sport_detail) {
                 }.build()
             imageMascot.load(image, imageLoader = imageLoader) { crossfade(500) }
             textViewSportTitle.text = title
-            chipSportSeason.text = season
+//            chipSportSeason.text = season
             toolbar.title = title
             textViewWhatIsUse
             val tempProducts = mutableListOf<ProductCard>()

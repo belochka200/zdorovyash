@@ -57,20 +57,20 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Футбол" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip__sport_season"
-                style="@style/Widget.Material3.Chip.Suggestion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/medium_indent"
-                android:layout_marginTop="@dimen/medium_indent"
-                android:layout_marginEnd="42dp"
-                android:clickable="false"
-                app:layout_constraintEnd_toStartOf="@+id/image__mascot"
-                app:layout_constraintHorizontal_bias="0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/text_view__sport_title"
-                tools:text="Летний вид спорта" />
+<!--            <com.google.android.material.chip.Chip-->
+<!--                android:id="@+id/chip__sport_season"-->
+<!--                style="@style/Widget.Material3.Chip.Suggestion"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="@dimen/medium_indent"-->
+<!--                android:layout_marginTop="@dimen/medium_indent"-->
+<!--                android:layout_marginEnd="42dp"-->
+<!--                android:clickable="false"-->
+<!--                app:layout_constraintEnd_toStartOf="@+id/image__mascot"-->
+<!--                app:layout_constraintHorizontal_bias="0"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/text_view__sport_title"-->
+<!--                tools:text="Летний вид спорта" />-->
 
             <!--            <TextView-->
             <!--                android:id="@+id/text_view__description"-->
@@ -90,7 +90,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:barrierDirection="bottom"
-                app:constraint_referenced_ids="image__mascot, text_view__sport_title, chip__sport_season" />
+                app:constraint_referenced_ids="image__mascot, text_view__sport_title" />
 
             <TextView
                 android:id="@+id/text_view__what_is_use"
