@@ -29,7 +29,7 @@
 
         <item name="toolbarStyle">@style/Widget.Sport.Toolbar</item>
         <item name="android:navigationBarColor">?attr/colorSurfaceVariant</item>
-        <item name="android:statusBarColor">@color/material_dynamic_primary50</item>
+        <item name="android:statusBarColor">?attr/colorSurfaceVariant</item>
     </style>
 
     <style name="Base.Theme.Sport" parent="Base.Theme.Night.V24.Sport" />
