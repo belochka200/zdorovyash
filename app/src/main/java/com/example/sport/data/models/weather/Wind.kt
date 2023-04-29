@@ -1,9 +1,8 @@
 package com.example.sport.data.models.weather
 
-import kotlinx.serialization.Serializable
-
-@Serializable
-data class Wind(
-    val deg: Int,
-    val speed: Int
-)
+//@Serializable
+//data class Wind(
+//    val deg: Float,
+//    val speed: Float,
+//    val gust: Float,
+//)

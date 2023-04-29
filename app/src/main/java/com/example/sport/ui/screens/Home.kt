@@ -26,10 +26,8 @@ import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.example.sport.R
 import com.example.sport.data.models.sport.SportItem
-import com.example.sport.data.models.story.Story
 import com.example.sport.databinding.FragmentHomeBinding
 import com.example.sport.ui.adapters.SportCardAdapter
-import com.example.sport.ui.adapters.StoryCardAdapter
 import com.example.sport.ui.uistate.HomeScreenUiState
 import com.example.sport.ui.viewmodels.HomeViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -58,10 +56,12 @@ class Home : Fragment(R.layout.fragment__home) {
                     else {
                         Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG).show()
 //                        findNavController().navigate(R.id.action_homeScreen_to_settings)
+                        homeViewModel.hideSplash()
                     }
                 }
             } else {
                 Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG).show()
+                homeViewModel.hideSplash()
 //                findNavController().navigate(R.id.action_homeScreen_to_settings)
             }
         }
@@ -124,9 +124,10 @@ class Home : Fragment(R.layout.fragment__home) {
                     fusedLocationProviderClient.lastLocation.addOnSuccessListener { location ->
                         if (location != null)
                             homeViewModel.refreshWeather(location)
-                        else
-                            Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG)
-                                .show()
+                        else {
+                            Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG).show()
+                            homeViewModel.hideSplash()
+                        }
                     }
                 else
                     requestPermissionLauncher.launch(Manifest.permission.ACCESS_COARSE_LOCATION)
@@ -164,20 +165,20 @@ class Home : Fragment(R.layout.fragment__home) {
             textViewTempMaxMin.text = getString(R.string.temp_mask_max_min, maxTemp, minTemp)
             textViewCity.text = city
             val icon = when (weatherIcon) { // fixme пофиксить отображение только дневных иконок
-                "01d.png" -> R.drawable._01d
-                "01n.png" -> R.drawable._01n
-                "02d.png" -> R.drawable._02d
-                "02n.png" -> R.drawable._02n
-                "09d.png" -> R.drawable._09d
-                "09n.png" -> R.drawable._09n
-                "10d.png" -> R.drawable._10d
-                "10n.png" -> R.drawable._10n
-                "11d.png" -> R.drawable._11d
-                "11n.png" -> R.drawable._11n
-                "13d.png" -> R.drawable._13d
-                "13n.png" -> R.drawable._13n
-                "50d.png" -> R.drawable._50d
-                "50n.png" -> R.drawable._50n
+                "01d" -> R.drawable._01d
+                "01n" -> R.drawable._01n
+                "02d" -> R.drawable._02d
+                "02n" -> R.drawable._02n
+                "09d" -> R.drawable._09d
+                "09n" -> R.drawable._09n
+                "10d" -> R.drawable._10d
+                "10n" -> R.drawable._10n
+                "11d" -> R.drawable._11d
+                "11n" -> R.drawable._11n
+                "13d" -> R.drawable._13d
+                "13n" -> R.drawable._13n
+                "50d" -> R.drawable._50d
+                "50n" -> R.drawable._50n
                 else -> R.drawable._01d
             }
             imageWeatherIcon.load(icon) { crossfade(500) }

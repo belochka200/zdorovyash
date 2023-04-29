@@ -1,6 +1,7 @@
 package com.example.sport.ui.viewmodels
 
 import android.location.Location
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
@@ -33,10 +34,8 @@ class HomeViewModel(
         _uiState.value = HomeScreenUiState.Loading
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                val useCase =
-                    LoadHomeScreenUseCaseImpl(weatherApiImpl, sportApiImpl)
+                val useCase = LoadHomeScreenUseCaseImpl(weatherApiImpl, sportApiImpl)
                 val weatherResponse = useCase.loadWeather(location)
-//                val storiesResponse = useCase.loadStory()
                 val sportItems = useCase.loadSportCards()
                 _uiState.value =
                     HomeScreenUiState.Content(
@@ -50,9 +49,15 @@ class HomeViewModel(
                     )
                 _isLoading.value = false
             } catch (e: Exception) {
+                Log.e("Error API", e.toString())
                 _uiState.value = HomeScreenUiState.Error
+                _isLoading.value = false
             }
         }
+    }
+
+    fun hideSplash() {
+        _isLoading.value = false
     }
 
     init {

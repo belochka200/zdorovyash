@@ -7,7 +7,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import java.net.URL
 
-const val WEATHER_API_KEY = "53af612e6252b27564da95ca8b0a540c"
+private const val WEATHER_API_KEY = "53af612e6252b27564da95ca8b0a540c"
 
 private interface WeatherApi {
     suspend fun getWeather(location: Location): WeatherAnswer

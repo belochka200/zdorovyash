@@ -4,6 +4,7 @@ package com.example.sport
 import android.app.Application
 import com.example.sport.data.network.SportApiImpl
 import com.example.sport.data.network.WeatherApiImpl
+import com.google.android.material.color.DynamicColors
 
 class SportApplication : Application() {
 
@@ -14,6 +15,6 @@ class SportApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-//        DynamicColors.applyToActivitiesIfAvailable(this)
+        DynamicColors.applyToActivitiesIfAvailable(this)
     }
 }
