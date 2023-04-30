@@ -17,12 +17,19 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
+import androidx.compose.material3.Button
+import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -177,7 +184,8 @@ class Home : Fragment(R.layout.fragment__home) {
                         currentTemperature = currentTemperature,
                         city = city,
                         currentPrecipitation = currentPrecipitation,
-                        icon = getWeatherIcon(weatherIcon)
+                        icon = getWeatherIcon(weatherIcon),
+                        showCityNotification = true
                     )
                 }
             }
@@ -214,37 +222,74 @@ class Home : Fragment(R.layout.fragment__home) {
     private fun TopHeader(
         currentTemperature: Int,
         city: String,
+        showCityNotification: Boolean,
         currentPrecipitation: String,
         icon: Int
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            CardInfo(
-                currentTemperature = currentTemperature,
-                city = city,
-                currentPrecipitation = currentPrecipitation,
-                icon = icon
-            )
-            Image(
-                painter = painterResource(id = R.drawable.mascot),
-                contentDescription = stringResource(id = R.string.app_name),
-                modifier = Modifier.padding(8.dp)
-            )
+        var showNotification by remember {
+            mutableStateOf(true)
+        }
+        Column {
+            if (showNotification)
+                ElevatedCard(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Column {
+                        Text(
+                            text = "$city - это ваш город?",
+                            modifier = Modifier.padding(16.dp),
+                            style = MaterialTheme.typography.headlineLarge
+                        )
+                        Row(
+                            modifier = Modifier.padding(bottom = 16.dp)
+                        ) {
+                            Button(
+                                onClick = { showNotification = false }, modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 16.dp, end = 8.dp)
+                                    .weight(1f)
+                            ) {
+                                Text(text = "Да")
+                            }
+                            OutlinedButton(
+                                onClick = { /*TODO*/ }, modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 8.dp, end = 16.dp)
+                                    .weight(1f)
+                            ) {
+                                Text(text = "Нет, изменить")
+                            }
+                        }
+                    }
+                }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                CardInfo(
+                    currentTemperature = currentTemperature,
+                    currentPrecipitation = currentPrecipitation,
+                    icon = icon
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.mascot),
+                    contentDescription = stringResource(id = R.string.app_name),
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier.padding(8.dp)
+                )
+            }
         }
     }
 
     @Composable
     private fun CardInfo(
         currentTemperature: Int,
-        city: String,
         currentPrecipitation: String,
         icon: Int,
     ) {
-        Card {
+        ElevatedCard {
             Surface {
                 Column(
                     modifier = Modifier.padding(16.dp)
@@ -268,14 +313,6 @@ class Home : Fragment(R.layout.fragment__home) {
                         modifier = Modifier
                             .padding(vertical = 8.dp)
                     )
-//            Text(
-//                text = city,
-//                style = MaterialTheme.typography.headlineLarge,
-//                textAlign = TextAlign.Center,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(vertical = 8.dp)
-//            )
                     Text(
                         text = currentPrecipitation.replaceFirstChar { it.uppercase() },
                         style = MaterialTheme.typography.headlineLarge,
