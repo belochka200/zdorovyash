@@ -47,99 +47,105 @@
                 android:layout_height="wrap_content"
                 android:animateLayoutChanges="true">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:id="@+id/card__weather_info"
-                    style="@style/Widget.Material3.CardView.Elevated"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/medium_indent"
-                    app:layout_constraintBottom_toBottomOf="@id/image__mascot"
-                    app:layout_constraintEnd_toStartOf="@id/image__mascot"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/image__mascot">
 
-                    <LinearLayout
+<!--                <com.google.android.material.card.MaterialCardView-->
+<!--                    android:id="@+id/card__weather_info"-->
+<!--                    style="@style/Widget.Material3.CardView.Elevated"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="@dimen/medium_indent"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/image__mascot"-->
+<!--                    app:layout_constraintEnd_toStartOf="@id/image__mascot"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="@id/image__mascot">-->
+
+                    <androidx.compose.ui.platform.ComposeView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:id="@+id/compose__weather_info"/>
 
-                        <ImageView
-                            android:id="@+id/image__weather_icon"
-                            android:layout_width="match_parent"
-                            android:layout_height="100dp"
-                            android:layout_marginHorizontal="@dimen/medium_indent"
-                            android:layout_marginTop="@dimen/medium_indent"
-                            android:src="@drawable/round_wb_sunny_24"
-                            tools:src="@drawable/round_wb_sunny_24" />
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="vertical">-->
 
-                        <TextView
-                            android:id="@+id/text_view__current_temperature"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/medium_indent"
-                            android:layout_marginTop="@dimen/medium_indent"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-                            tools:text="+15 °C" />
+<!--                        <ImageView-->
+<!--                            android:id="@+id/image__weather_icon"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="100dp"-->
+<!--                            android:layout_marginHorizontal="@dimen/medium_indent"-->
+<!--                            android:layout_marginTop="@dimen/medium_indent"-->
+<!--                            android:src="@drawable/round_wb_sunny_24"-->
+<!--                            tools:src="@drawable/round_wb_sunny_24" />-->
 
-                        <TextView
-                            android:id="@+id/text_view__temp_max_min"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/medium_indent"
-                            android:layout_marginTop="@dimen/small_indent"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-                            tools:text="+10 °C / -5°C" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/text_view__current_temperature"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginHorizontal="@dimen/medium_indent"-->
+<!--                            android:layout_marginTop="@dimen/medium_indent"-->
+<!--                            android:textAlignment="center"-->
+<!--                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"-->
+<!--                            tools:text="+15 °C" />-->
 
-                        <TextView
-                            android:id="@+id/text_view__current_precipitation"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/medium_indent"
-                            android:layout_marginTop="@dimen/medium_indent"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-                            tools:text="Ясно" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/text_view__temp_max_min"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginHorizontal="@dimen/medium_indent"-->
+<!--                            android:layout_marginTop="@dimen/small_indent"-->
+<!--                            android:textAlignment="center"-->
+<!--                            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"-->
+<!--                            tools:text="+10 °C / -5°C" />-->
 
-                        <TextView
-                            android:id="@+id/text_view__city"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/medium_indent"
-                            android:textAlignment="center"
-                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-                            tools:text="Нижний Новгород" />
+<!--                        <TextView-->
+<!--                            android:id="@+id/text_view__current_precipitation"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_marginHorizontal="@dimen/medium_indent"-->
+<!--                            android:layout_marginTop="@dimen/medium_indent"-->
+<!--                            android:textAlignment="center"-->
+<!--                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"-->
+<!--                            tools:text="Ясно" />-->
 
-                    </LinearLayout>
+<!--                        <TextView-->
+<!--                            android:id="@+id/text_view__city"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="@dimen/medium_indent"-->
+<!--                            android:textAlignment="center"-->
+<!--                            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"-->
+<!--                            tools:text="Нижний Новгород" />-->
 
-                </com.google.android.material.card.MaterialCardView>
+<!--                    </LinearLayout>-->
 
-                <ImageView
-                    android:id="@+id/image__mascot"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginHorizontal="@dimen/medium_indent"
-                    android:layout_marginTop="@dimen/medium_indent"
-                    android:contentDescription="@string/app_name"
-                    android:src="@drawable/mascot"
-                    app:layout_constraintBottom_toBottomOf="@id/card__weather_info"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/card__weather_info"
-                    app:layout_constraintTop_toTopOf="parent" />
+<!--                </com.google.android.material.card.MaterialCardView>-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/image__mascot"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="0dp"-->
+<!--                    android:layout_marginHorizontal="@dimen/medium_indent"-->
+<!--                    android:layout_marginTop="@dimen/medium_indent"-->
+<!--                    android:contentDescription="@string/app_name"-->
+<!--                    android:src="@drawable/mascot"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/card__weather_info"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toEndOf="@id/card__weather_info"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
 
                 <androidx.constraintlayout.widget.Group
                     android:id="@+id/group__top_bar"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    app:constraint_referenced_ids="image__mascot, card__weather_info" />
+                    app:constraint_referenced_ids="compose__weather_info" />
 
                 <androidx.constraintlayout.widget.Barrier
                     android:id="@+id/weather_info_barrier"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     app:barrierDirection="bottom"
-                    app:constraint_referenced_ids="image__mascot, card__weather_info" />
+                    app:constraint_referenced_ids="compose__weather_info" />
 
 <!--                <Button-->
 <!--                    android:id="@+id/button__roll_up"-->

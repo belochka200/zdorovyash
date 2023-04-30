@@ -10,11 +10,26 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -24,7 +39,6 @@ import androidx.navigation.fragment.findNavController
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
-import coil.load
 import com.example.sport.R
 import com.example.sport.data.models.sport.SportItem
 import com.example.sport.databinding.FragmentHomeBinding
@@ -156,33 +170,121 @@ class Home : Fragment(R.layout.fragment__home) {
                     else
                         add(GifDecoder.Factory())
                 }.build()
-            imageMascot.load(R.drawable.all_football, imageLoader) { crossfade(500) }
-            textViewCurrentPrecipitation.text =
-                currentPrecipitation.replaceFirstChar { it.uppercase() }
-            textViewCurrentTemperature.text =
-                if (currentTemperature > 0)
-                    "+${getString(R.string.temperature_mask, currentTemperature)}"
-                else
-                    getString(R.string.temperature_mask, currentTemperature)
-            textViewTempMaxMin.text = getString(R.string.temp_mask_max_min, maxTemp, minTemp)
-            textViewCity.text = city
-            imageWeatherIcon.load(getWeatherIcon(weatherIcon)) { crossfade(500) }
-//            recyclerViewStories.adapter = StoryCardAdapter(stories)
+//            imageMascot.load(R.drawable.all_football, imageLoader) { crossfade(500) }
+            composeWeatherInfo.setContent {
+                MaterialTheme {
+                    TopHeader(
+                        currentTemperature = currentTemperature,
+                        city = city,
+                        currentPrecipitation = currentPrecipitation,
+                        icon = getWeatherIcon(weatherIcon)
+                    )
+                }
+            }
+//            textViewCurrentPrecipitation.text =
+//                currentPrecipitation.replaceFirstChar { it.uppercase() }
+//            textViewCurrentTemperature.text =
+//                if (currentTemperature > 0)
+//                    "+${getString(R.string.temperature_mask, currentTemperature)}"
+//                else
+//                    getString(R.string.temperature_mask, currentTemperature)
+//            textViewTempMaxMin.text = getString(R.string.temp_mask_max_min, maxTemp, minTemp)
+//            textViewCity.text = city
+//            imageWeatherIcon.load(getWeatherIcon(weatherIcon)) { crossfade(500) }
+////            recyclerViewStories.adapter = StoryCardAdapter(stories)
             recyclerViewSports.adapter = SportCardAdapter(sportCards, imageLoader) {
                 val bundle = bundleOf("sportId" to it)
                 findNavController().navigate(R.id.action_homeScreen_to_sportDetail, bundle)
             }
-            nestedScrollView.setOnScrollChangeListener(
-                NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
-                    if (scrollY > textViewCurrentPrecipitation.bottom)
-                        toolbar.title =
-                            if (currentTemperature > 0)
-                                "+${getString(R.string.temperature_mask, currentTemperature)}, $currentPrecipitation"
-                            else
-                                "${getString(R.string.temperature_mask, currentTemperature)}, $currentPrecipitation"
-                    else
-                        toolbar.title = getString(R.string.app_name)
-                })
+//            nestedScrollView.setOnScrollChangeListener(
+//                NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
+//                    if (scrollY > textViewCurrentPrecipitation.bottom)
+//                        toolbar.title =
+//                            if (currentTemperature > 0)
+//                                "+${getString(R.string.temperature_mask, currentTemperature)}, $currentPrecipitation"
+//                            else
+//                                "${getString(R.string.temperature_mask, currentTemperature)}, $currentPrecipitation"
+//                    else
+//                        toolbar.title = getString(R.string.app_name)
+//                })
+        }
+    }
+
+    @Composable
+    private fun TopHeader(
+        currentTemperature: Int,
+        city: String,
+        currentPrecipitation: String,
+        icon: Int
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            CardInfo(
+                currentTemperature = currentTemperature,
+                city = city,
+                currentPrecipitation = currentPrecipitation,
+                icon = icon
+            )
+            Image(
+                painter = painterResource(id = R.drawable.mascot),
+                contentDescription = stringResource(id = R.string.app_name),
+                modifier = Modifier.padding(8.dp)
+            )
+        }
+    }
+
+    @Composable
+    private fun CardInfo(
+        currentTemperature: Int,
+        city: String,
+        currentPrecipitation: String,
+        icon: Int,
+    ) {
+        Card {
+            Surface {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Image(
+                        painterResource(id = icon),
+                        contentDescription = currentPrecipitation,
+                        modifier = Modifier
+                            .padding(top = 16.dp, bottom = 8.dp)
+                            .height(100.dp)
+                    )
+                    Text(
+                        text =
+                        if (currentTemperature > 0)
+                            "+${getString(R.string.temperature_mask, currentTemperature)}"
+                        else
+                            getString(R.string.temperature_mask, currentTemperature),
+                        color = MaterialTheme.colorScheme.onSurface,
+                        style = MaterialTheme.typography.headlineLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(vertical = 8.dp)
+                    )
+//            Text(
+//                text = city,
+//                style = MaterialTheme.typography.headlineLarge,
+//                textAlign = TextAlign.Center,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(vertical = 8.dp)
+//            )
+                    Text(
+                        text = currentPrecipitation.replaceFirstChar { it.uppercase() },
+                        style = MaterialTheme.typography.headlineLarge,
+                        textAlign = TextAlign.Center,
+                        modifier = Modifier
+                            .padding(top = 8.dp, bottom = 16.dp)
+                    )
+                }
+            }
         }
     }
 
