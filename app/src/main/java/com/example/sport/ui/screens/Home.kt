@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -125,7 +126,8 @@ class Home : Fragment(R.layout.fragment__home) {
                         if (location != null)
                             homeViewModel.refreshWeather(location)
                         else {
-                            Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), "Введите город", Toast.LENGTH_LONG)
+                                .show()
                             homeViewModel.hideSplash()
                         }
                     }
@@ -154,7 +156,7 @@ class Home : Fragment(R.layout.fragment__home) {
                     else
                         add(GifDecoder.Factory())
                 }.build()
-            imageMascot.load(R.drawable.all_football, imageLoader = imageLoader) { crossfade(500) }
+            imageMascot.load(R.drawable.all_football, imageLoader) { crossfade(500) }
             textViewCurrentPrecipitation.text =
                 currentPrecipitation.replaceFirstChar { it.uppercase() }
             textViewCurrentTemperature.text =
@@ -164,47 +166,20 @@ class Home : Fragment(R.layout.fragment__home) {
                     getString(R.string.temperature_mask, currentTemperature)
             textViewTempMaxMin.text = getString(R.string.temp_mask_max_min, maxTemp, minTemp)
             textViewCity.text = city
-            val icon = when (weatherIcon) { // fixme пофиксить отображение только дневных иконок
-                "01d" -> R.drawable._01d
-                "01n" -> R.drawable._01n
-                "02d" -> R.drawable._02d
-                "02n" -> R.drawable._02n
-                "09d" -> R.drawable._09d
-                "09n" -> R.drawable._09n
-                "10d" -> R.drawable._10d
-                "10n" -> R.drawable._10n
-                "11d" -> R.drawable._11d
-                "11n" -> R.drawable._11n
-                "13d" -> R.drawable._13d
-                "13n" -> R.drawable._13n
-                "50d" -> R.drawable._50d
-                "50n" -> R.drawable._50n
-                else -> R.drawable._01d
-            }
-            imageWeatherIcon.load(icon) { crossfade(500) }
+            imageWeatherIcon.load(getWeatherIcon(weatherIcon)) { crossfade(500) }
 //            recyclerViewStories.adapter = StoryCardAdapter(stories)
             recyclerViewSports.adapter = SportCardAdapter(sportCards, imageLoader) {
                 val bundle = bundleOf("sportId" to it)
                 findNavController().navigate(R.id.action_homeScreen_to_sportDetail, bundle)
             }
             nestedScrollView.setOnScrollChangeListener(
-                NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+                NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
                     if (scrollY > textViewCurrentPrecipitation.bottom)
                         toolbar.title =
                             if (currentTemperature > 0)
-                                "+${
-                                    getString(
-                                        R.string.temperature_mask,
-                                        currentTemperature
-                                    )
-                                }, $currentPrecipitation"
+                                "+${getString(R.string.temperature_mask, currentTemperature)}, $currentPrecipitation"
                             else
-                                "${
-                                    getString(
-                                        R.string.temperature_mask,
-                                        currentTemperature
-                                    )
-                                }, $currentPrecipitation"
+                                "${getString(R.string.temperature_mask, currentTemperature)}, $currentPrecipitation"
                     else
                         toolbar.title = getString(R.string.app_name)
                 })
@@ -232,9 +207,7 @@ class Home : Fragment(R.layout.fragment__home) {
             ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
                 requireContext(),
                 Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                true
-            }
+            ) == PackageManager.PERMISSION_GRANTED -> true
 
             shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_COARSE_LOCATION) -> {
                 showLocationRequiredDialog()
@@ -257,6 +230,30 @@ class Home : Fragment(R.layout.fragment__home) {
                 dialog.dismiss()
             }
             .show()
+    }
+
+    private fun getWeatherIcon(icon: String): Int {
+        return when (icon) {
+            "01d" -> R.drawable._01d
+            "01n" -> R.drawable._01n
+            "02d" -> R.drawable._02d
+            "02n" -> R.drawable._02n
+            "03n" -> R.drawable._02n // fixme: Change weather icon
+            "03d" -> R.drawable._02n // fixme: Change weather icon
+            "04d" -> R.drawable._02n // fixme: Change weather icon
+            "04n" -> R.drawable._02n // fixme: Change weather icon
+            "09d" -> R.drawable._09d
+            "09n" -> R.drawable._09n
+            "10d" -> R.drawable._10d
+            "10n" -> R.drawable._10n
+            "11d" -> R.drawable._11d
+            "11n" -> R.drawable._11n
+            "13d" -> R.drawable._13d
+            "13n" -> R.drawable._13n
+            "50d" -> R.drawable._50d
+            "50n" -> R.drawable._50n
+            else -> R.drawable._01d
+        }
     }
 
     private fun showLoading() {

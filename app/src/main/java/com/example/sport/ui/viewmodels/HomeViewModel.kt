@@ -36,6 +36,7 @@ class HomeViewModel(
             try {
                 val useCase = LoadHomeScreenUseCaseImpl(weatherApiImpl, sportApiImpl)
                 val weatherResponse = useCase.loadWeather(location)
+                Log.d("Icon", weatherResponse.icon)
                 val sportItems = useCase.loadSportCards()
                 _uiState.value =
                     HomeScreenUiState.Content(
